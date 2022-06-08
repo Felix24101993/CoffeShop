@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Mentorship2022Application {
-
+//comentariu
 	public static void main(String[] args) {
 		SpringApplication.run(Mentorship2022Application.class, args);
 	}
