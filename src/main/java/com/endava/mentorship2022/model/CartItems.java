@@ -1,4 +1,4 @@
 package com.endava.mentorship2022.model;
 
-public class User {
+public class CartItems {
 }
