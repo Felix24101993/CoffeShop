@@ -1,15 +1,25 @@
 package com.endava.mentorship2022.service;
 
+import com.endava.mentorship2022.exception.UserNotFound;
 import com.endava.mentorship2022.model.User;
+import com.endava.mentorship2022.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public interface UserService {
+@AllArgsConstructor
+public class UserService {
 
-    List<User> findAll();
+    private UserRepository userRepository;
 
-    User findById(Long id);
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
+    public User findById(Long id) {
+        return userRepository.findById(id).
+                orElseThrow(() -> new UserNotFound("The user with the id: " + id + " doesn't exists"));
+    }
 }
