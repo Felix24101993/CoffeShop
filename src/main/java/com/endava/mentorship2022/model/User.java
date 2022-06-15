@@ -15,32 +15,32 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, length = 40)
+    @Column(name = "id", nullable = false, length = 40)
     private Long id;
 
-    @Column(nullable = false, length = 40)
+    @Column(name = "first_name", nullable = false, length = 40)
     private String firstName;
 
-    @Column(nullable = false, length = 40)
+    @Column(name = "last_name", nullable = false, length = 40)
     private String lastName;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 64)
+    @Column(name = "password", nullable = false, length = 64)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Column(nullable = false, length = 200)
+    @Column(name = "address", nullable = false, length = 200)
     private String address;
 
-    @Column(nullable = false, length = 15)
+    @Column(name = "phone_number", nullable = false, length = 15)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
-    @Column(nullable = false, length = 10, columnDefinition = "pending")
+    @Column(name = "status", nullable = false, length = 10, columnDefinition = "pending")
     private String status;
 
 }
