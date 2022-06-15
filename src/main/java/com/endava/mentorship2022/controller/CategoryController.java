@@ -12,7 +12,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("categories")
+@RequestMapping("/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -22,7 +22,7 @@ public class CategoryController {
         return categoryService.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Category findById(@PathVariable long id){
         return categoryService.findById(id);
     }
