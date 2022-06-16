@@ -18,8 +18,13 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category findById(Long id) {
+    public Category findById(long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFound("Category not found with ID " + id));
+    }
+
+    public List<Category> findAllByParent(){
+        Long id = null; // If parent id is null then the category is parent(root).
+        return categoryRepository.findAllByParent(id);
     }
 
 }
