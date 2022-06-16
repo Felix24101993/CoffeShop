@@ -12,7 +12,7 @@ public class TechnicalDetailsService {
     private final TechnicalDetailsRepository technicalDetailsRepository;
     private final ProductService productService;
 
-    public List<TechnicalDetails> TechnicalDetailsList(Long productId) {
+    public List<TechnicalDetails> findAllByProductId(long productId) {
         Product product = productService.findById(productId);
         return technicalDetailsRepository.findByProduct(product);
     }
