@@ -40,7 +40,7 @@ public class User {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
-    @Column(name = "status", nullable = false, length = 10, columnDefinition = "pending")
-    private String status;
+    @Column(name = "status", nullable = false, length = 10, columnDefinition = "PENDING")
+    private UserStatus status;
 
 }
