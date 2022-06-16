@@ -24,8 +24,10 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    /* To be implemented after Product entity has been implemented
     @Transient
     public float getSubtotal() {
         return product.getPrice() * quantity;
     }
+    */
 }
