@@ -15,7 +15,7 @@ public class TechnicalDetailsController {
 
     // View technicaldetails for a specific product
     @GetMapping("/{productId}")
-    public List viewTechnicalDetails(@PathVariable Long productId) {
+    public List viewTechnicalDetails(@PathVariable long productId) {
         return technicalDetailsService.TechnicalDetailsList(productId);
     }
 }
