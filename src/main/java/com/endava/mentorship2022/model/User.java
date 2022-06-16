@@ -40,6 +40,9 @@ public class User {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
+    // added @Enumerated annotation for solving java.lang.NumberFormatException: For input string: "PENDING"
+    // The most common option to map an enum value to and from its database representation in JPA
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 10, columnDefinition = "PENDING")
     private UserStatus status;
 
