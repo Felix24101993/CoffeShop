@@ -22,9 +22,9 @@ public class CategoryController {
         return categoryService.findAll();
     }
 
-    @GetMapping("/parents")
-    public List<Category> findAllByParent() {
-        return categoryService.findAllByParent();
+    @GetMapping("/parents/{id}")
+    public List<Category> findAllByParent(@PathVariable Long id) {
+        return categoryService.findAllByParent(id);
     }
 
     @GetMapping("/{id}")

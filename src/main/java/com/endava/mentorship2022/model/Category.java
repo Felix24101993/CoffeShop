@@ -23,4 +23,8 @@ public class Category {
     @OneToOne
     @JoinColumn(name = "parent_id")
     private Category parent;
+
+    public Category(long id) {
+        this.id = id;
+    }
 }
