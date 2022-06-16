@@ -17,10 +17,21 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    //View all orders
+    @GetMapping
+    public List<Order> findAll(){
+        return orderService.findAll();
+    }
+
     // View orders for a specific user
     @GetMapping("/{userId}")
-    public List<Order> viewOrders(@PathVariable Long userId) {
-        return orderService.listOrders(userId);
+    public List<Order> findOrdersByUserId(@PathVariable Long userId) {
+        return orderService.findOrdersByUserId(userId);
+    }
+
+    @GetMapping("/{id}")
+    public Order findById(@PathVariable long id){
+        return orderService.findById(id);
     }
 
 }
