@@ -24,8 +24,8 @@ public class OrderController {
     }
 
     // View orders for a specific user
-    @GetMapping("/{userId}")
-    public List<Order> findOrdersByUserId(@PathVariable Long userId) {
+    @GetMapping("user/{userId}")
+    public List<Order> findOrdersByUserId(@PathVariable long userId) {
         return orderService.findOrdersByUserId(userId);
     }
 
