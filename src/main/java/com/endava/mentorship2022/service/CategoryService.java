@@ -19,7 +19,7 @@ public class CategoryService {
     }
 
     public Category findById(long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFound("Category not found with ID " + id));
+        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFound("Category: " + id + " not found."));
     }
 
     public List<Category> findAllByParent(Long id){
