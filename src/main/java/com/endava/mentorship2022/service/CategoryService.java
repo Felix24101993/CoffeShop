@@ -22,13 +22,9 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFound("Category: " + id + " not found."));
     }
 
-    public List<Category> findAllByParent(Long id){
-        Category categoryParent;
-        if(id == 0) { // Root Categories
-            categoryParent = null;
-        } else {
-            categoryParent = new Category(id);
-        }
+    public List<Category> findAllByParent(Long id) {
+        Category categoryParent = null;
+        if (id != 0) categoryParent = new Category(id);
         return categoryRepository.findAllByParent(categoryParent);
     }
 
