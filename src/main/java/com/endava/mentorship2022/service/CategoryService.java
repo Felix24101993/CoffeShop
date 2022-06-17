@@ -23,13 +23,13 @@ public class CategoryService {
     }
 
     public List<Category> findAllByParent(Long id){
-        if(id == 0) {
-            id = null;
-            return categoryRepository.findAllByParent(id);
+        Category categoryParent;
+        if(id == 0) { // Root Categories
+            categoryParent = null;
         } else {
-            Category categoryParent = new Category(id);
-            return categoryRepository.findAllByParent(categoryParent);
+            categoryParent = new Category(id);
         }
+        return categoryRepository.findAllByParent(categoryParent);
     }
 
 }
