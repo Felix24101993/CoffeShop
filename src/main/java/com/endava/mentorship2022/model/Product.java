@@ -28,7 +28,9 @@ public class Product {
     private int stock;
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
-    @ManyToOne
+
+    //TODO
+    /*@ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private Category category;*/
 }
