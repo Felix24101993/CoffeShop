@@ -12,12 +12,13 @@ import javax.persistence.*;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(name = "alias", nullable = false, length = 100, unique = true)
     private String alias;
 
     @OneToOne
