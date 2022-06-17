@@ -18,12 +18,6 @@ public class TechnicalDetailService {
     public List<TechnicalDetail> findAll() {
         return technicalDetailRepository.findAll();
     }
-/*
-    public List<TechnicalDetail> findAllByProductId(long productId) {
-        Product product = productService.findById(productId);
-        return technicalDetailRepository.findByProduct(product);
-    }
 
- */
 
 }

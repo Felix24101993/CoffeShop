@@ -20,11 +20,6 @@ public class TechnicalDetailController {
     public List<TechnicalDetail> findAll() {
         return technicalDetailService.findAll();
     }
-    /*
-    @GetMapping("/{productId}")
-    public List viewTechnicalDetail(@PathVariable long productId) {
-        return technicalDetailService.findAll();
-    }
-*/
+
 
 }
