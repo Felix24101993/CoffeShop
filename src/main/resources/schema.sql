@@ -10,6 +10,8 @@ CREATE TABLE `users` (
                          `password` VARCHAR(64) NOT NULL,
                          `address` VARCHAR(200) NOT NULL,
                          `phone_number` VARCHAR(15) NOT NULL,
+                         `birth_date` DATE NOT NULL,
+                         `status` VARCHAR(10) NOT NULL DEFAULT 'PENDING',
                          PRIMARY KEY (`id`),
                          UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 
