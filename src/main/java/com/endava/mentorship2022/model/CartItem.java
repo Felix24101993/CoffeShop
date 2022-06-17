@@ -20,9 +20,10 @@ public class CartItem {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    // TODO
+//    @ManyToOne
+//    @JoinColumn(name = "product_id")
+//    private Product product;
 
     /* To be implemented after Product entity has been implemented
     @Transient

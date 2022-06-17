@@ -23,7 +23,7 @@ public class CartItemService {
         User user = userService.findById(userId);
         List<CartItem> cartItems = cartItemRepository.findByUser(user);
 
-        /* To be implemented after Product entity has been implemented
+        /*TODO To be implemented after Product entity has been implemented
         float estimatedTotal = 0.0F;
         for (CartItem item : cartItems) {
             estimatedTotal += item.getSubtotal(); // Total to pay
