@@ -22,4 +22,13 @@ public class UserService {
         return userRepository.findById(id).
                 orElseThrow(() -> new UserNotFound("The user with the id: " + id + " doesn't exists"));
     }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
+
 }
