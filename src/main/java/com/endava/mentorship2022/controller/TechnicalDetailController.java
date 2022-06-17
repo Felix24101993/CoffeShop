@@ -1,4 +1,6 @@
 package com.endava.mentorship2022.controller;
+import com.endava.mentorship2022.model.TechnicalDetail;
+import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.service.TechnicalDetailService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,16 @@ import java.util.List;
 public class TechnicalDetailController {
     private final TechnicalDetailService technicalDetailService;
 
-    // View technicaldetail for a specific product
+    // View technicaldetail for a specific product\
+    @GetMapping
+    public List<TechnicalDetail> findAll() {
+        return technicalDetailService.findAll();
+    }
+    /*
     @GetMapping("/{productId}")
     public List viewTechnicalDetail(@PathVariable long productId) {
-        return technicalDetailService.findAllByProductId(productId);
+        return technicalDetailService.findAll();
     }
+*/
+
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface TechnicalDetailRepository extends JpaRepository<TechnicalDetail, Long> {
-    List<TechnicalDetail> findAllByProduct(long id);
+    //List<TechnicalDetail> findAllByProduct(long id);
 
 }
 
