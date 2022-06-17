@@ -1,17 +1,17 @@
 USE coffee_shop;
 
-INSERT INTO `users` (`first_name`, `last_name`, `email`,`password`,`address`,`phone_number`)
+INSERT INTO `users` (`first_name`, `last_name`, `email`,`password`,`address`,`phone_number`,`birth_date`,`status`)
 VALUES 
-	('Dorin','Gavrila','dorin-gavrila@gmail.com','pass','Romania, Bucuresti, Strada Gabroveni, 030089','+40721058124'),
-    ('Cristobal','Tudor','cristobal.tudor@yahoo.com','pass','Romania, Voluntari, Bulevardul Pipera 1, 077190','+40212006464'),
-    ('Antim','Stoian','antim.stoian@gmail.com','pass','Romania, Timisoara, Strada Eugeniu de Savoya, 300085','+40372705084'),
-    ('Alma','Cretu','alma_cretu@hotmail.com','pass','Romania, Oradea, Strada Motilor, 410089','+40771692320'),
-    ('Emanuel','Cornea','emanuel.cornea@gmail.com','pass','Romania, Cluj-Napoca, Strada Emile Zola, 400112','+40727779607'),
-    ('Stana','Craciun','stana-craciun@gmail.com','pass','Romania, Timisoara, Bd. Vasile Parvan, Nr. 1-3, 300323','+40735444200'),
-    ('Edward','Butler','edward.butler@gmail.com','pass','United Kingdom, Rye, 96 High St, TN31 7JN','+441797229003'),
-    ('Loni','Weis','loni.weis@gmail.com','pass','Germany, Dresden, Sophienstrasse, 01067','+4935149142000'),
-    ('Naomi','Bell','naomi-bell@yahoo.com','pass','United Kingdom, Grange-over-Sands, Ayside, LA11 6JA','+441539531475'),
-    ('Karl-Wilhelm','Horn','karl-horn@gmail.com','$2a$12$Y0uo2J7GBYu.ufZ3NJmwzewEiuOjGrhUX98alSLTAkC6w3S9aIgnK','Germany, Hamburg, Grosse Elbstrasse 132, 22767','+4940306220');
+	('Dorin','Gavrila','dorin-gavrila@gmail.com','pass','Romania, Bucuresti, Strada Gabroveni, 030089','+40721058124','2001-02-02','PENDING'),
+    ('Cristobal','Tudor','cristobal.tudor@yahoo.com','pass','Romania, Voluntari, Bulevardul Pipera 1, 077190','+40212006464','2001-02-02','PENDING'),
+    ('Antim','Stoian','antim.stoian@gmail.com','pass','Romania, Timisoara, Strada Eugeniu de Savoya, 300085','+40372705084','2001-02-02','PENDING'),
+    ('Alma','Cretu','alma_cretu@hotmail.com','pass','Romania, Oradea, Strada Motilor, 410089','+40771692320','2001-02-02','PENDING'),
+    ('Emanuel','Cornea','emanuel.cornea@gmail.com','pass','Romania, Cluj-Napoca, Strada Emile Zola, 400112','+40727779607','2001-02-02','BLOCKED'),
+    ('Stana','Craciun','stana-craciun@gmail.com','pass','Romania, Timisoara, Bd. Vasile Parvan, Nr. 1-3, 300323','+40735444200','2001-02-02','BLOCKED'),
+    ('Edward','Butler','edward.butler@gmail.com','pass','United Kingdom, Rye, 96 High St, TN31 7JN','+441797229003','2001-02-02','BLOCKED'),
+    ('Loni','Weis','loni.weis@gmail.com','pass','Germany, Dresden, Sophienstrasse, 01067','+4935149142000','2001-02-02','ACTIVE'),
+    ('Naomi','Bell','naomi-bell@yahoo.com','pass','United Kingdom, Grange-over-Sands, Ayside, LA11 6JA','+441539531475','2001-02-02','ACTIVE'),
+    ('Karl-Wilhelm','Horn','karl-horn@gmail.com','$2a$12$Y0uo2J7GBYu.ufZ3NJmwzewEiuOjGrhUX98alSLTAkC6w3S9aIgnK','Germany, Hamburg, Grosse Elbstrasse 132, 22767','+4940306220','2001-02-02','ACTIVE');
   
 INSERT INTO `categories` (`id`, `name`, `alias`, `parent_id`) 
 VALUES 
