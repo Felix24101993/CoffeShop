@@ -16,12 +16,13 @@ import java.util.List;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private long id;
 
-    @Column(nullable = false)
+    @Column(name = "date", nullable = false)
     private Date date;
 
-    @Column(nullable = false)
+    @Column(name = "total", nullable = false)
     private float total;
 
     @ManyToOne

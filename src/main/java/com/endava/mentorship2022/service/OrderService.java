@@ -23,11 +23,12 @@ public class OrderService {
 
     public List<Order> findOrdersByUserId(Long userId) {
         User user = userService.findById(userId);
-
         return orderRepository.findByUser(user);
     }
 
     public Order findById(long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new OrderNotFound("Order: " + id + " not found."));
+        return orderRepository.findById(id).
+                orElseThrow(() -> new OrderNotFound("Order: " + id + " not found."));
     }
+
 }
