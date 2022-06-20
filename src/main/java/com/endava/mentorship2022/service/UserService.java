@@ -28,7 +28,21 @@ public class UserService {
     }
 
     public void deleteById(Long id) {
+        findById(id); // just call the method, if the user is not found it throws UserNotFound Exception
         userRepository.deleteById(id);
+    }
+
+    public User update(Long id, User newUser) {
+        User userToUpdate = findById(id);
+        userToUpdate.setFirstName(newUser.getFirstName());
+        userToUpdate.setLastName(newUser.getLastName());
+        userToUpdate.setEmail(newUser.getEmail());
+        userToUpdate.setPassword(newUser.getPassword());
+        userToUpdate.setAddress(newUser.getAddress());
+        userToUpdate.setPhoneNumber(newUser.getPhoneNumber());
+        userToUpdate.setBirthDate(newUser.getBirthDate());
+        userToUpdate.setStatus(newUser.getStatus());
+        return userRepository.save(userToUpdate);
     }
 
 }

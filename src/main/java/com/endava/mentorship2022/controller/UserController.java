@@ -31,16 +31,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public User update(@PathVariable Long id, @RequestBody User newUser) {
-        User userToUpdate = userService.findById(id);
-        userToUpdate.setFirstName(newUser.getFirstName());
-        userToUpdate.setLastName(newUser.getLastName());
-        userToUpdate.setEmail(newUser.getEmail());
-        userToUpdate.setPassword(newUser.getPassword());
-        userToUpdate.setAddress(newUser.getAddress());
-        userToUpdate.setPhoneNumber(newUser.getPhoneNumber());
-        userToUpdate.setBirthDate(newUser.getBirthDate());
-        userToUpdate.setStatus(newUser.getStatus());
-        return userService.save(userToUpdate);
+        return userService.update(id, newUser);
     }
 
     @DeleteMapping("/{id}")
