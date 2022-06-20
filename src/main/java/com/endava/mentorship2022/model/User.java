@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Data
@@ -38,10 +38,10 @@ public class User {
     private String phoneNumber;
 
     @Column(name = "birth_date", nullable = false)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 10, columnDefinition = "PENDING")
-    private UserStatus status;
+    private UserStatus status = UserStatus.PENDING;
 
 }

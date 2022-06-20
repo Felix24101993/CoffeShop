@@ -2,6 +2,7 @@ package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.UserNotFound;
 import com.endava.mentorship2022.model.User;
+import com.endava.mentorship2022.model.UserStatus;
 import com.endava.mentorship2022.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,11 @@ public class UserService {
         userToUpdate.setBirthDate(newUser.getBirthDate());
         userToUpdate.setStatus(newUser.getStatus());
         return userRepository.save(userToUpdate);
+    }
+
+    public void updateStatus(UserStatus status, User user) {
+        user.setStatus(status);
+        userRepository.save(user);
     }
 
 }
