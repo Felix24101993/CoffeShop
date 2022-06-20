@@ -15,10 +15,10 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public List<Product> listAllProducts() {
-       return productRepository.findAll();
-}
+        return productRepository.findAll();
+    }
 
     public Product findById(long id) {
-        return productRepository.findById(id).orElseThrow(()-> new ProductNotFound("Product: " + id + " not found!"));
+        return productRepository.findById(id).orElseThrow(() -> new ProductNotFound("Product: " + id + " not found!"));
     }
 }
