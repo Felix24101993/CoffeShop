@@ -9,28 +9,34 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "products")
-
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "name", length = 200, nullable = false)
+
     private String name;
-    @Column(name = "alias", length = 200, nullable = false)
+    @Column(name = "alias", length = 200, nullable = false, unique = true)
+
     private String alias;
-    @Column(name = "description", length = 3000, nullable = false)
+    @Column(name = "description", length = 3000, nullable = false, unique = true)
+
     private String description;
     @Column(name = "brand", length = 80, nullable = false)
+
     private String brand;
     @Column(name = "price", nullable = false)
+
     private float price;
     @Column(name = "stock", nullable = false)
+
     private int stock;
     @Column(name = "enabled", nullable = false)
+
     private boolean enabled;
 
-    //TODO
-    /*@ManyToOne
+
+    @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;*/
+    private Category category;
 }
