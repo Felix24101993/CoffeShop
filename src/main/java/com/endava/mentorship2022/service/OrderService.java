@@ -31,4 +31,25 @@ public class OrderService {
                 orElseThrow(() -> new OrderNotFound("Order: " + id + " not found."));
     }
 
+    public Order save(Order order) {
+        return orderRepository.save(order);
+    }
+
+    public void deleteById(Long id) {
+        findById(id);
+        orderRepository.deleteById(id);
+    }
+
+    public Order update(Long id, Order newOrder) {
+        Order orderToUpdate = findById(id);
+        setNewToUpdate(newOrder, orderToUpdate);
+        return orderRepository.save(orderToUpdate);
+    }
+
+    private void setNewToUpdate(Order newOrder, Order orderToUpdate) {
+        orderToUpdate.setUser(newOrder.getUser());
+        orderToUpdate.setDate(newOrder.getDate());
+        orderToUpdate.setTotal(newOrder.getTotal());
+    }
+
 }

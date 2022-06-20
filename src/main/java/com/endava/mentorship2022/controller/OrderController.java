@@ -1,12 +1,10 @@
 package com.endava.mentorship2022.controller;
 
 import com.endava.mentorship2022.model.Order;
+import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.service.OrderService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +30,21 @@ public class OrderController {
     @GetMapping("/{id}")
     public Order findById(@PathVariable long id){
         return orderService.findById(id);
+    }
+
+    @PostMapping
+    public Order save(@RequestBody Order order) {
+        return orderService.save(order);
+    }
+
+    @PutMapping("/{id}")
+    public Order update(@PathVariable Long id, @RequestBody Order newOrder) {
+        return orderService.update(id, newOrder);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        orderService.deleteById(id);
     }
 
 }
