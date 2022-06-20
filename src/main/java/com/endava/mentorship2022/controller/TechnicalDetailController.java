@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/technicaldetail")
+@RequestMapping("/technicaldetails")
 @AllArgsConstructor
 public class TechnicalDetailController {
     private final TechnicalDetailService technicalDetailService;
