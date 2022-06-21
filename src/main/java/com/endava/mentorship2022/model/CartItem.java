@@ -12,23 +12,23 @@ import javax.persistence.*;
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    // TODO
-//    @ManyToOne
-//    @JoinColumn(name = "product_id")
-//    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    /* To be implemented after Product entity has been implemented
     @Transient
     public float getSubtotal() {
         return product.getPrice() * quantity;
     }
-    */
+
 }

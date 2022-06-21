@@ -17,7 +17,6 @@ public class CartItemController {
 
     private final CartItemService cartItemService;
 
-    // View cart for a specific user
     @GetMapping("/{userId}")
     public List<CartItem> viewCart(@PathVariable long userId) {
         return cartItemService.listCartItems(userId);
