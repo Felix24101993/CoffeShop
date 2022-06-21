@@ -1,12 +1,15 @@
+
 package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.OrderNotFound;
 import com.endava.mentorship2022.model.Order;
+import com.endava.mentorship2022.model.OrderStatus;
 import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -40,16 +43,8 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    public Order update(Long id, Order newOrder) {
-        Order orderToUpdate = findById(id);
-        setNewToUpdate(newOrder, orderToUpdate);
-        return orderRepository.save(orderToUpdate);
-    }
-
-    private void setNewToUpdate(Order newOrder, Order orderToUpdate) {
-        orderToUpdate.setUser(newOrder.getUser());
-        orderToUpdate.setDate(newOrder.getDate());
-        orderToUpdate.setTotal(newOrder.getTotal());
+    public void updateStatus(Long id, OrderStatus newOrderStatus) {
+        findById(id).setStatus(newOrderStatus);
     }
 
 }

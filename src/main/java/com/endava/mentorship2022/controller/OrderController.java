@@ -1,6 +1,7 @@
 package com.endava.mentorship2022.controller;
 
 import com.endava.mentorship2022.model.Order;
+import com.endava.mentorship2022.model.OrderStatus;
 import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.service.OrderService;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,6 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    //View all orders
     @GetMapping
     public List<Order> findAll(){
         return orderService.findAll();
@@ -38,8 +38,8 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public Order update(@PathVariable Long id, @RequestBody Order newOrder) {
-        return orderService.update(id, newOrder);
+    public void updateStatus(@PathVariable Long id, @RequestBody OrderStatus status) {
+        orderService.updateStatus(id, status);
     }
 
     @DeleteMapping("/{id}")

@@ -86,14 +86,14 @@ VALUES
 	('Continut', 'Cafea', 10),
 	('Tip', 'Cafea boabe', 10);
     
-INSERT INTO `orders` (`total`, `date`, `user_id`)
+INSERT INTO `orders` (`total`, `date`, `user_id`, `status`)
 VALUES
-	(293.47, '2022-03-11', 1),
-	(58.3, '2022-05-22', 2),
-	(97, '2022-01-18', 3),
-	(34.58, '2022-04-15', 4),
-	(391.95, '2022-05-30', 5),
-	(25.1, '2022-05-29', 1);
+	(293.47, '2022-03-11', 1, 'COMPLETED'),
+	(58.3, '2022-05-22', 2, 'CANCELLED'),
+	(97, '2022-01-18', 3, 'COMPLETED'),
+	(34.58, '2022-04-15', 4, 'REFUNDED'),
+	(391.95, '2022-05-30', 5, 'COMPLETED'),
+	(25.1, '2022-05-29', 1, 'PENDING');
     
 INSERT INTO `order_details` (`quantity`, `unit_price`, `product_id`,`order_id`)
 VALUES
