@@ -19,7 +19,7 @@ public class CartItemController {
 
     @GetMapping("/{userId}")
     public List<CartItem> viewCart(@PathVariable long userId) {
-        return cartItemService.listCartItems(userId);
+        return cartItemService.findCartItemsByUser(userId);
     }
 
 }
