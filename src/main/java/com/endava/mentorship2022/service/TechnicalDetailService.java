@@ -33,10 +33,7 @@ public class TechnicalDetailService {
     }
 
     public void deleteByIdTechnicalDetail(Long id) {
-        boolean technicalDetailExists = technicalDetailRepository.existsById(id);
-        if (!technicalDetailExists) {
-            throw new IllegalStateException(String.format("TechnicalDetail with id %s does not exist", id));
-        }
+        findByIdTechnicalDetail(id);
         technicalDetailRepository.deleteById(id);
     }
 
