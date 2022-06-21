@@ -1,17 +1,10 @@
 package com.endava.mentorship2022.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor

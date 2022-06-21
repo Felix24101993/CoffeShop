@@ -38,13 +38,9 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public void updateStatus(@PathVariable Long id, @RequestBody OrderStatus status) {
-        orderService.updateStatus(id, status);
-    }
+    public void updateStatus(@PathVariable Long id, @RequestBody Order newOrderStatus) { orderService.updateStatus(id, newOrderStatus); }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        orderService.deleteById(id);
-    }
+    public void deleteById(@PathVariable Long id) {orderService.deleteById(id); }
 
 }

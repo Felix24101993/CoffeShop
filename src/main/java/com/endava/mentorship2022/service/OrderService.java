@@ -43,8 +43,10 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    public void updateStatus(Long id, OrderStatus newOrderStatus) {
-        findById(id).setStatus(newOrderStatus);
+    public Order updateStatus(Long id, Order OrderNewStatus) {
+        Order order = findById(id);
+        order.setStatus(OrderNewStatus.getStatus());
+        return orderRepository.save(order);
     }
 
 }
