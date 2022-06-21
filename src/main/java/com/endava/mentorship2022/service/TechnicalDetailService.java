@@ -12,11 +12,11 @@ public class TechnicalDetailService {
 
     private final TechnicalDetailRepository technicalDetailRepository;
 
-    public List<TechnicalDetail> findAll() {
+    public List<TechnicalDetail> findAllTechnicalDetails() {
         return technicalDetailRepository.findAll();
     }
 
-    public TechnicalDetail findById(Long id) {
+    public TechnicalDetail findByIdTechnicalDetail(Long id) {
         return technicalDetailRepository.findById(id).orElseThrow(() -> new TechnicalDetailNotFound("TechnicalDetail: " + id + " not found."));
     }
 
@@ -25,14 +25,14 @@ public class TechnicalDetailService {
     }
 
     public TechnicalDetail updateTechnicalDetail(Long id, TechnicalDetail newTechnicalDetail) {
-        TechnicalDetail technicalDetailToUpdate = findById(id);
+        TechnicalDetail technicalDetailToUpdate = findByIdTechnicalDetail(id);
         technicalDetailToUpdate.setName(newTechnicalDetail.getName());
         technicalDetailToUpdate.setValue(newTechnicalDetail.getValue());
         technicalDetailToUpdate.setProduct(newTechnicalDetail.getProduct());
         return technicalDetailRepository.save(technicalDetailToUpdate);
     }
 
-    public void deleteTechnicalDetail(Long id) {
+    public void deleteByIdTechnicalDetail(Long id) {
         boolean technicalDetailExists = technicalDetailRepository.existsById(id);
         if (!technicalDetailExists) {
             throw new IllegalStateException(String.format("TechnicalDetail with id %s does not exist", id));

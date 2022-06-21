@@ -15,13 +15,13 @@ public class TechnicalDetailController {
 
     @GetMapping
     public List<TechnicalDetail> findAll() {
-        return technicalDetailService.findAll();
+        return technicalDetailService.findAllTechnicalDetails();
     }
 
 
     @GetMapping("/{id}")
     public TechnicalDetail findByIdTechnicalDetail(@PathVariable Long id) {
-        return technicalDetailService.findById(id);
+        return technicalDetailService.findByIdTechnicalDetail(id);
     }
 
     @PostMapping
@@ -36,7 +36,7 @@ public class TechnicalDetailController {
 
     @DeleteMapping("/{id}")
     public void deleteTechnicalDetail(@PathVariable Long id) {
-        technicalDetailService.deleteTechnicalDetail(id);
+        technicalDetailService.deleteByIdTechnicalDetail(id);
     }
 
 }
