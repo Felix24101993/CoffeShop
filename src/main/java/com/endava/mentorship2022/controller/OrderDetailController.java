@@ -1,7 +1,7 @@
 package com.endava.mentorship2022.controller;
 
-import com.endava.mentorship2022.model.OrderDetails;
-import com.endava.mentorship2022.service.OrderDetailsService;
+import com.endava.mentorship2022.model.OrderDetail;
+import com.endava.mentorship2022.service.OrderDetailService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,17 +13,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/order-details")
 @AllArgsConstructor
-public class OrderDetailsController {
+public class OrderDetailController {
 
-    private final OrderDetailsService orderDetailsService;
+    private final OrderDetailService orderDetailsService;
 
     @GetMapping
-    public List<OrderDetails> findAll() {
+    public List<OrderDetail> findAll() {
         return orderDetailsService.findAll();
     }
 
     @GetMapping("/{id}")
-    public List<OrderDetails> findByOrderId(@PathVariable long id) {
+    public List<OrderDetail> findByOrderId(@PathVariable long id) {
         return orderDetailsService.findByOrderId(id);
     }
 
