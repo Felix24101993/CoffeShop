@@ -19,6 +19,12 @@ public class UserController {
         return userService.findAll();
     }
 
+    // method for getting all the users sorted by their birthdate and after that by their first name
+    @GetMapping("/sorted")
+    public List<User> findAllSorted() {
+        return userService.findAllSorted();
+    }
+
     @GetMapping("/{id}")
     public User findById(@PathVariable Long id) {
         return userService.findById(id);
