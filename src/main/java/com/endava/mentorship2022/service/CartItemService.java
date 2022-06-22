@@ -28,7 +28,7 @@ public class CartItemService {
         User user = userService.findById(userId);
         short updatedQuantity = quantity;
         Product product = productService.findById(productId);
-        CartItem cartItem = cartItemRepository.findByUserAndProduct(user, product);
+        CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
 
         if (cartItem != null) { // If cart already has that product, update quantity
             updatedQuantity = (short) (cartItem.getQuantity() + quantity);

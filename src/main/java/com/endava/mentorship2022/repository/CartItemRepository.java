@@ -1,8 +1,6 @@
 package com.endava.mentorship2022.repository;
 
 import com.endava.mentorship2022.model.CartItem;
-import com.endava.mentorship2022.model.Product;
-import com.endava.mentorship2022.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,8 +12,6 @@ import java.util.List;
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     List<CartItem> findByUserId(long id);
-
-    CartItem findByUserAndProduct(User user, Product product);
 
     CartItem findByUserIdAndProductId(long userId, long productId);
 
