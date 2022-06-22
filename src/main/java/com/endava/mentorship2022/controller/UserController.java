@@ -40,7 +40,7 @@ public class UserController {
         userService.deleteById(id);
     }
 
-    @PatchMapping("/{id}/updateStatus")
+    @PatchMapping("/{id}/update-status")
     public User updateStatus(@PathVariable long id, @RequestBody UserStatus userStatus) {
         return userService.updateStatus(userStatus, findById(id));
     }
