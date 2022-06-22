@@ -16,7 +16,7 @@ public class CartItem {
     private long id;
 
     @Column(name = "quantity", nullable = false)
-    private int quantity;
+    private short quantity;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
