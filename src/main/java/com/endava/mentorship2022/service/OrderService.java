@@ -43,9 +43,9 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    public Order updateStatus(Long id, Order OrderNewStatus) {
+    public Order updateStatus(Long id, OrderStatus newStatus) {
         Order order = findById(id);
-        order.setStatus(OrderNewStatus.getStatus());
+        order.setStatus(newStatus);
         return orderRepository.save(order);
     }
 
