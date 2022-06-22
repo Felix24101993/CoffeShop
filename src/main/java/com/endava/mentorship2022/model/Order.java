@@ -1,13 +1,12 @@
 package com.endava.mentorship2022.model;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +19,7 @@ public class Order {
     private long id;
 
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date = LocalDate.now();
 
     @Column(name = "total", nullable = false)
     private float total;
@@ -28,4 +27,11 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private Set<OrderDetail> orderDetails = new HashSet<>();
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 10, columnDefinition = "PENDING")
+    private OrderStatus status = OrderStatus.PENDING;
 }
