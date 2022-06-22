@@ -28,4 +28,22 @@ public class CategoryService {
         return categoryRepository.findAllByParent(categoryParent);
     }
 
+    public Category save(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    public Category update(Long id, Category category) {
+        Category updatedCategory = findById(id);
+
+        updatedCategory.setName(category.getName());
+        updatedCategory.setAlias(category.getAlias());
+        updatedCategory.setParent(category.getParent());
+
+        return categoryRepository.save(updatedCategory);
+    }
+
+    public void deleteById(long id){
+        Category category = findById(id);
+        categoryRepository.delete(category);
+    }
 }
