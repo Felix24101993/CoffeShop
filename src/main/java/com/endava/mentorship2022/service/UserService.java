@@ -45,9 +45,9 @@ public class UserService {
         return userRepository.save(userToUpdate);
     }
 
-    public void updateStatus(UserStatus status, User user) {
+    public User updateStatus(UserStatus status, User user) {
         user.setStatus(status);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
 }
