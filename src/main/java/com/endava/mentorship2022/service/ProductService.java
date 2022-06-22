@@ -21,4 +21,26 @@ public class ProductService {
     public Product findById(long id) {
         return productRepository.findById(id).orElseThrow(() -> new ProductNotFound("Product: " + id + " not found!"));
     }
+
+    public Product saveProduct(Product product){
+        return productRepository.save(product);
+    }
+
+    public void deleteById(Long id){
+        findById(id);
+        productRepository.deleteById(id);
+    }
+
+    public Product updateProduct(long id, Product newProduct){
+        Product productToUpdate = findById(id);
+        productToUpdate.setName(newProduct.getName());
+        productToUpdate.setAlias(newProduct.getAlias());
+        productToUpdate.setBrand(newProduct.getBrand());
+        productToUpdate.setDescription(newProduct.getDescription());
+        productToUpdate.setCategory(newProduct.getCategory());
+        productToUpdate.setEnabled(newProduct.isEnabled());
+        productToUpdate.setPrice(newProduct.getPrice());
+        productToUpdate.setStock(newProduct.getStock());
+        return productRepository.save(productToUpdate);
+    }
 }
