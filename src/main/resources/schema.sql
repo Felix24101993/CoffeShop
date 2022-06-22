@@ -55,6 +55,7 @@ CREATE TABLE `orders` (
                           `total` FLOAT NOT NULL,
                           `date` DATE NOT NULL,
                           `user_id` BIGINT NOT NULL,
+                          `status` VARCHAR(10) NOT NULL DEFAULT 'PENDING',
                           PRIMARY KEY (`id`),
                           KEY `FK_user_id_idx` (`user_id`),
                           CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
