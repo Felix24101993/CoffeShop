@@ -4,10 +4,7 @@ package com.endava.mentorship2022.controller;
 import com.endava.mentorship2022.model.Product;
 import com.endava.mentorship2022.service.ProductService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,4 +24,19 @@ public class ProductController {
     public Product findProductById(@PathVariable long id){
         return productService.findById(id);
     }
+    @PostMapping
+    public Product saveProduct(@RequestBody Product product){
+        return productService.saveProduct(product);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteProduct(@PathVariable long id){
+        productService.deleteById(id);
+    }
+
+    @PutMapping("{id}")
+    public Product updateProduct(@PathVariable long id, @RequestBody Product newProduct){
+        return productService.updateProduct(id, newProduct);
+    }
+
 }
