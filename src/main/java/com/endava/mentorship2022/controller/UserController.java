@@ -1,6 +1,7 @@
 package com.endava.mentorship2022.controller;
 
 import com.endava.mentorship2022.model.User;
+import com.endava.mentorship2022.model.UserStatus;
 import com.endava.mentorship2022.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,12 @@ public class UserController {
     @GetMapping
     public List<User> findAll() {
         return userService.findAll();
+    }
+
+    // method for getting all the users sorted by their birthdate and after that by their first name
+    @GetMapping("/sorted")
+    public List<User> findAllSorted() {
+        return userService.findAllSorted();
     }
 
     @GetMapping("/{id}")
@@ -37,6 +44,11 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         userService.deleteById(id);
+    }
+
+    @PatchMapping("/{id}/updateStatus")
+    public User updateStatus(@PathVariable long id, @RequestBody UserStatus userStatus) {
+        return userService.updateStatus(userStatus, findById(id));
     }
 
 }

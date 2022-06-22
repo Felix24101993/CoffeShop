@@ -2,10 +2,12 @@ package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.UserNotFound;
 import com.endava.mentorship2022.model.User;
+import com.endava.mentorship2022.model.UserStatus;
 import com.endava.mentorship2022.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -41,8 +43,32 @@ public class UserService {
         userToUpdate.setAddress(newUser.getAddress());
         userToUpdate.setPhoneNumber(newUser.getPhoneNumber());
         userToUpdate.setBirthDate(newUser.getBirthDate());
-        userToUpdate.setStatus(newUser.getStatus());
         return userRepository.save(userToUpdate);
+    }
+
+    public User updateStatus(UserStatus status, User user) {
+        user.setStatus(status);
+        return userRepository.save(user);
+    }
+
+    // returns the list of users sorted by their birthdate and after that by their first name
+    public List<User> findAllSorted() {
+
+        // findAll() method gets all the users from the DB and then, the sorting method sorts them
+        return sortUsersByBirthdateAndByFirstName(findAll());
+    }
+
+    private List<User> sortUsersByBirthdateAndByFirstName(List<User> usersList) {
+
+        Comparator<User> compareByBirthdateAndByFirstName =
+                Comparator.comparing(User::getBirthDate)
+                        .reversed()                        // used reversed() to sort them ascending by their birthdate
+                        .thenComparing(User::getFirstName);
+
+        usersList.sort(compareByBirthdateAndByFirstName);
+
+        return usersList;
+
     }
 
 }
