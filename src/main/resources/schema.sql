@@ -69,8 +69,8 @@ CREATE TABLE `cart_items` (
                               PRIMARY KEY (`id`),
                               KEY `FK_user_id_idx` (`user_id`),
                               KEY `FK_product_id_idx` (`product_id`),
-                              CONSTRAINT `FK_user_id_cart` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-                              CONSTRAINT `FK_product_id_cart` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`));
+                              CONSTRAINT `FK_user_id_cart` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+                              CONSTRAINT `FK_product_id_cart` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE);
 
 CREATE TABLE `order_details` (
                                  `id` BIGINT NOT NULL AUTO_INCREMENT,
