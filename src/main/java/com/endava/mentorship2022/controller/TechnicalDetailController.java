@@ -39,4 +39,8 @@ public class TechnicalDetailController {
         technicalDetailService.deleteByIdTechnicalDetail(id);
     }
 
+    @GetMapping("/product/{id}")
+    public List<TechnicalDetail> findTechnicalDetailsByProductId(@PathVariable Long id){
+        return technicalDetailService.findTechnicalDetailsByProductId(id);
+    }
 }

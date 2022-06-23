@@ -12,6 +12,7 @@ public class TechnicalDetailService {
 
     private final TechnicalDetailRepository technicalDetailRepository;
 
+
     public List<TechnicalDetail> findAllTechnicalDetails() {
         return technicalDetailRepository.findAll();
     }
@@ -35,6 +36,10 @@ public class TechnicalDetailService {
     public void deleteByIdTechnicalDetail(Long id) {
         findByIdTechnicalDetail(id);
         technicalDetailRepository.deleteById(id);
+    }
+
+    public List<TechnicalDetail> findTechnicalDetailsByProductId(Long id){
+        return technicalDetailRepository.findByProductId(id);
     }
 
 }
