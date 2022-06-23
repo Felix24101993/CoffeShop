@@ -16,7 +16,7 @@ public class CartItem {
     private long id;
 
     @Column(name = "quantity", nullable = false)
-    private int quantity;
+    private short quantity;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -25,10 +25,5 @@ public class CartItem {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
-    @Transient
-    public float getSubtotal() {
-        return product.getPrice() * quantity;
-    }
 
 }
