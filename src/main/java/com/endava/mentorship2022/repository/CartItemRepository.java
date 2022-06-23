@@ -11,16 +11,16 @@ import java.util.List;
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-    List<CartItem> findByUserId(long id);
+    List<CartItem> findCartItemsByUserId(long id);
 
-    CartItem findByUserIdAndProductId(long userId, long productId);
+    CartItem findCartItemByUserIdAndProductId(long userId, long productId);
 
     @Modifying
     @Query("UPDATE CartItem c SET c.quantity = ?1 WHERE c.user.id = ?2 AND c.product.id = ?3")
     void updateProductQuantity(short quantity, long userId, long productId);
 
-    void deleteByUserIdAndProductId(long userId, long productId);
+    void deleteCartItemByUserIdAndProductId(long userId, long productId);
 
-    void deleteByUserId(long userId);
+    void deleteCartItemsByUserId(long userId);
 
 }

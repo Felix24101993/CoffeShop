@@ -21,14 +21,14 @@ public class CartItemService {
     private final ProductService productService;
 
     public List<CartItem> findCartItemsByUser(long userId) {
-        return cartItemRepository.findByUserId(userId);
+        return cartItemRepository.findCartItemsByUserId(userId);
     }
 
     public String addProductToCart(long userId, long productId, short quantity) {
         User user = userService.findById(userId);
         short updatedQuantity = quantity;
         Product product = productService.findById(productId);
-        CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
+        CartItem cartItem = cartItemRepository.findCartItemByUserIdAndProductId(userId, productId);
 
         if (cartItem != null) { // If cart already has that product, update quantity
             updatedQuantity = (short) (cartItem.getQuantity() + quantity);
@@ -51,7 +51,7 @@ public class CartItemService {
     }
 
     public String updateProductQuantity(long userId, long productId, short quantity) {
-        CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
+        CartItem cartItem = cartItemRepository.findCartItemByUserIdAndProductId(userId, productId);
         if (cartItem == null) {
             return "The product is not in the cart.";
         }
@@ -64,10 +64,10 @@ public class CartItemService {
     }
 
     public String removeProductFromCart(long userId, long productId) {
-        if (cartItemRepository.findByUserIdAndProductId(userId, productId) == null) {
+        if (cartItemRepository.findCartItemByUserIdAndProductId(userId, productId) == null) {
             return "The product is not in the cart.";
         }
-        cartItemRepository.deleteByUserIdAndProductId(userId, productId);
+        cartItemRepository.deleteCartItemByUserIdAndProductId(userId, productId);
         return "The product has been removed from your shopping cart.";
     }
 
@@ -75,7 +75,7 @@ public class CartItemService {
         if (findCartItemsByUser(userId).isEmpty()) {
             return "Cart is already empty";
         }
-        cartItemRepository.deleteByUserId(userId);
+        cartItemRepository.deleteCartItemsByUserId(userId);
         return "Cart has been deleted!";
     }
 }
