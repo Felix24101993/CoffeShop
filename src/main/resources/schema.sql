@@ -39,7 +39,7 @@ CREATE TABLE `products` (
                             UNIQUE KEY `name_UNIQUE` (`name`),
                             UNIQUE KEY `alias_UNIQUE` (`alias`),
                             KEY `FK_category_id` (`category_id`),
-                            CONSTRAINT `FK_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`));
+                            CONSTRAINT `FK_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE);
 
 CREATE TABLE `technical_details` (
                                      `id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -69,8 +69,8 @@ CREATE TABLE `cart_items` (
                               PRIMARY KEY (`id`),
                               KEY `FK_user_id_idx` (`user_id`),
                               KEY `FK_product_id_idx` (`product_id`),
-                              CONSTRAINT `FK_user_id_cart` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-                              CONSTRAINT `FK_product_id_cart` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`));
+                              CONSTRAINT `FK_user_id_cart` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+                              CONSTRAINT `FK_product_id_cart` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE);
 
 CREATE TABLE `order_details` (
                                  `id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -83,6 +83,5 @@ CREATE TABLE `order_details` (
                                  KEY `FK_product_id_order_idx` (`product_id`),
                                  KEY `FK_order_id_idx` (`order_id`) ,
                                  CONSTRAINT `FK_product_id_order` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-                                 CONSTRAINT `FK_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`));
-
+                                 CONSTRAINT `FK_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE);
 
