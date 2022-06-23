@@ -1,9 +1,6 @@
 package com.endava.mentorship2022.service;
 import com.endava.mentorship2022.exception.TechnicalDetailNotFound;
-import com.endava.mentorship2022.model.Order;
-import com.endava.mentorship2022.model.Product;
 import com.endava.mentorship2022.model.TechnicalDetail;
-import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.repository.TechnicalDetailRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +12,6 @@ public class TechnicalDetailService {
 
     private final TechnicalDetailRepository technicalDetailRepository;
 
-    private ProductService productService;
 
     public List<TechnicalDetail> findAllTechnicalDetails() {
         return technicalDetailRepository.findAll();
@@ -43,8 +39,7 @@ public class TechnicalDetailService {
     }
 
     public List<TechnicalDetail> findTechnicalDetailsByProductId(Long id){
-        Product product = productService.findById(id);
-        return technicalDetailRepository.findByProduct(product);
+        return technicalDetailRepository.findByProductId(id);
     }
 
 }
