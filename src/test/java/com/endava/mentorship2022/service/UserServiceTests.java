@@ -31,12 +31,10 @@ class UserServiceTests {
     @InjectMocks
     private UserService userService;
 
-
     @Test
     @DisplayName("Should find all users")
     void findAllUsersTest() {
         // given
-
         User user1 = new User(
                 1L,
                 "Stanciu",
@@ -47,6 +45,7 @@ class UserServiceTests {
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
                 PENDING);
+
         User user2 = new User(
                 1L,
                 "Stanciu",
@@ -100,20 +99,7 @@ class UserServiceTests {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         // then
-        assertThrows(UserNotFound.class,
-                () -> userService.findById(anyLong()));
-    }
-
-
-    @Test
-    @DisplayName("Should throw UserNotFound Exception")
-    void deleteUserById_ExceptionTest() {
-        // given
-        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
-
-        // then
-        assertThrows(UserNotFound.class,
-                () -> userService.deleteById(anyLong()));
+        assertThrows(UserNotFound.class, () -> userService.findById(anyLong()));
     }
 
     @Test
@@ -130,6 +116,7 @@ class UserServiceTests {
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
                 PENDING);
+
         User newUser = new User(
                 1L,
                 "updated",
@@ -149,7 +136,6 @@ class UserServiceTests {
 
         //then
         assertThat(resultedUser).isEqualTo(newUser);
-
     }
 
     @Test
@@ -159,8 +145,7 @@ class UserServiceTests {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         // then
-        assertThrows(UserNotFound.class,
-                () -> userService.deleteById(anyLong()));
+        assertThrows(UserNotFound.class, () -> userService.deleteById(anyLong()));
     }
 
     @Test
@@ -177,6 +162,7 @@ class UserServiceTests {
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
                 PENDING);
+
         User updatedUser = new User(
                 1L,
                 "Stanciu",
