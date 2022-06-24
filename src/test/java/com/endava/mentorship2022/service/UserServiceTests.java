@@ -2,6 +2,7 @@ package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.UserNotFound;
 import com.endava.mentorship2022.model.User;
+import com.endava.mentorship2022.model.UserStatus;
 import com.endava.mentorship2022.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static com.endava.mentorship2022.model.UserStatus.ACTIVE;
 import static com.endava.mentorship2022.model.UserStatus.PENDING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -113,5 +115,87 @@ class UserServiceTests {
         assertThrows(UserNotFound.class,
                 () -> userService.deleteById(anyLong()));
     }
+
+    @Test
+    @DisplayName("Should update a user")
+    void updateUserTest() {
+        // given
+        User userToUpdate = new User(
+                1L,
+                "Stanciu",
+                "Angel",
+                "angel@gmail.com",
+                "pass",
+                "Romania, Bucuresti, Strada Gabroveni 030089",
+                "+40721058124",
+                LocalDate.of(2010, 1, 1),
+                PENDING);
+        User newUser = new User(
+                1L,
+                "updated",
+                "updated",
+                "updated@gmail.com",
+                "updated",
+                "updated",
+                "updated",
+                LocalDate.of(2222, 2, 2),
+                PENDING);
+
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(userToUpdate));
+        when(userRepository.save(userToUpdate)).thenReturn(newUser);
+
+        // when
+        User resultedUser = userService.update(anyLong(), newUser);
+
+        //then
+        assertThat(resultedUser).isEqualTo(newUser);
+
+    }
+
+    @Test
+    @DisplayName("Should throw UserNotFound Exception")
+    void updateUser_ExceptionTest() {
+        // given
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // then
+        assertThrows(UserNotFound.class,
+                () -> userService.deleteById(anyLong()));
+    }
+
+    @Test
+    @DisplayName("Should update user status")
+    void updateUserStatusTest() {
+        // given
+        User user = new User(
+                1L,
+                "Stanciu",
+                "Angel",
+                "angel@gmail.com",
+                "pass",
+                "Romania, Bucuresti, Strada Gabroveni 030089",
+                "+40721058124",
+                LocalDate.of(2010, 1, 1),
+                PENDING);
+        User updatedUser = new User(
+                1L,
+                "Stanciu",
+                "Angel",
+                "angel@gmail.com",
+                "pass",
+                "Romania, Bucuresti, Strada Gabroveni 030089",
+                "+40721058124",
+                LocalDate.of(2010, 1, 1),
+                ACTIVE);
+
+        when(userRepository.save(user)).thenReturn(updatedUser);
+
+        // when
+        User resultedUser = userService.updateStatus(ACTIVE, user);
+
+        // then
+        assertThat(resultedUser).isEqualTo(updatedUser);
+    }
+
 }
 
