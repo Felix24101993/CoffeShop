@@ -34,6 +34,7 @@ class CategoryServiceTest {
 
     @Test
     void canFindAllCategories() {
+        // given
         List<Category> categories = List.of(
                 new Category(1L,
                         "Category 1",
