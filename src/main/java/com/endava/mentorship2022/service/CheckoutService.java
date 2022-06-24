@@ -15,6 +15,9 @@ public class CheckoutService {
 
     public String placeOrder(long userId) {
         List<CartItem> cartItems = cartItemService.findCartItemsByUser(userId);
+        if (cartItems.isEmpty()) {
+            return "Cart is empty.";
+        }
         orderService.createOrder(userId, cartItems);
         cartItemService.deleteCartByUser(userId);
 
