@@ -18,4 +18,5 @@ public class CheckoutController {
     public String placeOrder(@PathVariable long userId) {
         return checkoutService.placeOrder(userId);
     }
+
 }

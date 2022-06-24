@@ -11,6 +11,7 @@ import java.util.List;
 public class CheckoutService {
 
     private final OrderService orderService;
+
     private final CartItemService cartItemService;
 
     public String placeOrder(long userId) {
@@ -23,4 +24,5 @@ public class CheckoutService {
 
         return "Order has been placed. Thank you for purchase.";
     }
+
 }
