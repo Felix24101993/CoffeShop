@@ -41,8 +41,8 @@ class CategoryServiceTest {
                         "category-1",
                         null),
                 new Category(2L,
-                        "Category 1",
-                        "category-1",
+                        "Category 2",
+                        "category-2",
                         null)
         );
         given(categoryRepository.findAll()).willReturn(categories);
