@@ -68,7 +68,10 @@ public class UserService {
         usersList.sort(compareByBirthdateAndByFirstName);
 
         return usersList;
+    }
 
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
 }
