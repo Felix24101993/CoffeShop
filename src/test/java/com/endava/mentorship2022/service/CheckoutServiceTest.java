@@ -68,10 +68,10 @@ class CheckoutServiceTest {
                 1500,
                 true,
                 category,
-                Set.of(new TechnicalDetail(1, "Brand:", "No-name", new Product(1L)))
+                Set.of(new TechnicalDetail(1L, "Brand:", "No-name", new Product(1L)))
         );
 
-        Product product2 = new Product(1L,
+        Product product2 = new Product(2L,
                 "Product 2",
                 "product-2",
                 "Description",
@@ -80,19 +80,19 @@ class CheckoutServiceTest {
                 1000,
                 true,
                 category,
-                Set.of(new TechnicalDetail(1, "Release Date:", "10/10/2020", new Product(2L)))
+                Set.of(new TechnicalDetail(1L, "Release Date:", "10/10/2020", new Product(2L)))
         );
 
         List<CartItem> cartItems = List.of(
                 new CartItem(1L, (short) 2, user, product1),
-                new CartItem(1L, (short) 1, user, product2)
+                new CartItem(2L, (short) 1, user, product2)
         );
 
         Set<OrderDetail> orderDetails = Set.of(
-                new OrderDetail(1L, (short) 2, 15.49F, 30.98F, new Order(1L), new Product(1)),
-                new OrderDetail(2L, (short) 1, 45.86F, 45.86F, new Order(1L), new Product(2))
+                new OrderDetail(1L, (short) 2, 15.49F, 30.98F, new Order(1L), product1),
+                new OrderDetail(2L, (short) 1, 45.86F, 45.86F, new Order(1L), product2)
         );
-        Order order = new Order(1,
+        Order order = new Order(1L,
                 LocalDate.now(),
                 76.84F,
                 user,
