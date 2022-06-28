@@ -16,6 +16,7 @@ import java.util.List;
 @Transactional
 public class CartItemService {
 
+    public static final int MAXIMUM_QUANTITY_ALLOWED = 15;
     private final CartItemRepository cartItemRepository;
     private final UserService userService;
     private final ProductService productService;
@@ -25,7 +26,7 @@ public class CartItemService {
     }
 
     public String addProductToCart(long userId, long productId, short quantity) {
-        if(quantity > 15) {
+        if(quantity > MAXIMUM_QUANTITY_ALLOWED) {
             throw new CartItemException("Could not add " + quantity + " items " +
                     "to your shopping cart. Maximum allowed quantity is 15.");
         }
@@ -37,7 +38,7 @@ public class CartItemService {
 
         if (cartItem != null) { // If cart already has that product, update quantity
             updatedQuantity = (short) (cartItem.getQuantity() + quantity);
-            if (updatedQuantity > 15) {
+            if (updatedQuantity > MAXIMUM_QUANTITY_ALLOWED) {
                 throw new CartItemException("Could not add more " + quantity + " item(s) " +
                         " because there's already " + cartItem.getQuantity() + " item(s) " +
                         "in your shopping cart. Maximum allowed quantity is 15.");
