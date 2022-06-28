@@ -25,6 +25,11 @@ public class CartItemService {
     }
 
     public String addProductToCart(long userId, long productId, short quantity) {
+        if(quantity > 15) {
+            throw new CartItemException("Could not add " + quantity + " items " +
+                    "to your shopping cart. Maximum allowed quantity is 15.");
+        }
+
         User user = userService.findById(userId);
         short updatedQuantity = quantity;
         Product product = productService.findById(productId);
