@@ -1,5 +1,6 @@
 package com.endava.mentorship2022.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -34,4 +36,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 10, columnDefinition = "PENDING")
     private OrderStatus status = OrderStatus.PENDING;
+
+    public Order(long id) {
+        this.id = id;
+    }
 }

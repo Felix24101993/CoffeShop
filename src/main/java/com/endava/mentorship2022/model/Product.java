@@ -1,5 +1,6 @@
 package com.endava.mentorship2022.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "products")
 public class Product {
@@ -43,4 +45,8 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<TechnicalDetail> technicalDetails = new HashSet<>();
+
+    public Product(long id) {
+        this.id = id;
+    }
 }
