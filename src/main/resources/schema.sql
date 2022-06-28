@@ -15,6 +15,19 @@ CREATE TABLE `users` (
                          PRIMARY KEY (`id`),
                          UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 
+CREATE TABLE `roles` (
+                         `id` BIGINT NOT NULL AUTO_INCREMENT,
+                         `name` VARCHAR(15) NOT NULL,
+                         PRIMARY KEY (`id`));
+
+CREATE TABLE `users_roles` (
+                               `user_id` int(11) NOT NULL,
+                               `role_id` int(11) NOT NULL,
+                               KEY `FK_role_id` (`role_id`),
+                               KEY `FK_user_idx` (`user_id`),
+                               CONSTRAINT `FK_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
+                               CONSTRAINT `FK_user_idx` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`));
+
 CREATE TABLE `categories` (
                               `id` BIGINT NOT NULL AUTO_INCREMENT,
                               `name` VARCHAR(100) NOT NULL,
@@ -58,8 +71,7 @@ CREATE TABLE `orders` (
                           `status` VARCHAR(10) NOT NULL DEFAULT 'PENDING',
                           PRIMARY KEY (`id`),
                           KEY `FK_user_id_idx` (`user_id`),
-                          CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-);
+                          CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`));
 
 CREATE TABLE `cart_items` (
                               `id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -84,4 +96,3 @@ CREATE TABLE `order_details` (
                                  KEY `FK_order_id_idx` (`order_id`) ,
                                  CONSTRAINT `FK_product_id_order` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
                                  CONSTRAINT `FK_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE);
-
