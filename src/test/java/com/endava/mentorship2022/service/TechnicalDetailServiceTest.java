@@ -73,7 +73,7 @@ public class TechnicalDetailServiceTest {
     }
 
     @Test
-    void willThrowCannotFindTechnicalDetailById(){
+    void willThrowCannotFindTechnicalDetailById() {
         //given
         given(technicalDetailRepository.findById(anyLong()))
                 .willReturn(Optional.empty());
@@ -86,7 +86,7 @@ public class TechnicalDetailServiceTest {
     }
 
     @Test
-    void canCreateTechnicalDetail(){
+    void canCreateTechnicalDetail() {
         TechnicalDetail technicalDetail1 = new TechnicalDetail(1L,
                 "TechDet 1",
                 "TechDet-1",
@@ -103,7 +103,7 @@ public class TechnicalDetailServiceTest {
     }
 
     @Test
-    void canUpdateTechncialDetail(){
+    void canUpdateTechncialDetail() {
         TechnicalDetail technicalDetail1 = new TechnicalDetail(1L,
                 "TechDet 1",
                 "TechDet-1",
