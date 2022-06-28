@@ -24,6 +24,7 @@ public class SecurityConfiguration {
         return http
                 .authorizeRequests()
                 .antMatchers("/", "/doc/**").permitAll()
+                .antMatchers("/users/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
