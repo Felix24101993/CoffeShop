@@ -1,11 +1,9 @@
 package com.endava.mentorship2022.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,5 +20,8 @@ public class Role {
 
     @Column(nullable = false, length = 15)
     private String name;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
 }
