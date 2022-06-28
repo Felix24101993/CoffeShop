@@ -150,7 +150,7 @@ class CartItemServiceTest {
     }
 
     @Test
-    void willThrowCannotAddProductToCartMaximumQuantityExceeded_updateAddQuantity() {
+    void willThrowCannotAddProductToCartMaximumQuantityExceeded_addQuantityForExistent() {
         // given
         given(userService.findById(anyLong())).willReturn(user);
         given(productService.findById(anyLong())).willReturn(product1);
@@ -198,7 +198,7 @@ class CartItemServiceTest {
     }
 
     @Test
-    void cannotUpdateProductQuantityProductIsNotInCart() {
+    void cannotUpdateProductQuantity_productIsNotInCart() {
         // given
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(null);
 
@@ -239,7 +239,7 @@ class CartItemServiceTest {
     }
 
     @Test
-    void cannotRemoveProductNotFoundInCart() {
+    void cannotRemoveProduct_notFoundInCart() {
         // given
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(null);
 
@@ -264,7 +264,7 @@ class CartItemServiceTest {
     }
 
     @Test
-    void cannotDeleteCartByUserCartIsEmpty() {
+    void cannotDeleteCartByUser_cartIsEmpty() {
         // given
         given(cartItemRepository.findCartItemsByUserId(anyLong())).willReturn(Collections.emptyList());
 
