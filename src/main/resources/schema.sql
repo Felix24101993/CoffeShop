@@ -21,8 +21,8 @@ CREATE TABLE `roles` (
                          PRIMARY KEY (`id`));
 
 CREATE TABLE `users_roles` (
-                               `user_id` int(11) NOT NULL,
-                               `role_id` int(11) NOT NULL,
+                               `user_id` BIGINT NOT NULL,
+                               `role_id` BIGINT NOT NULL,
                                KEY `FK_role_id` (`role_id`),
                                KEY `FK_user_idx` (`user_id`),
                                CONSTRAINT `FK_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
