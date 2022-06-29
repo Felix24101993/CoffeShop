@@ -31,16 +31,21 @@ class CartItemServiceTest {
 
     @Mock
     private CartItemRepository cartItemRepository;
+
     @Mock
     private UserService userService;
+
     @Mock
     private ProductService productService;
 
     private CartItemService cartItemService;
 
     User user;
+
     Product product1;
+
     Product product2;
+
     List<CartItem> cartItems;
 
     @BeforeEach
