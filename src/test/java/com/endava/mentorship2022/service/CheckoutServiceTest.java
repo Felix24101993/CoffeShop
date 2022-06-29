@@ -1,14 +1,6 @@
 package com.endava.mentorship2022.service;
 
-import com.endava.mentorship2022.model.CartItem;
-import com.endava.mentorship2022.model.Category;
-import com.endava.mentorship2022.model.Order;
-import com.endava.mentorship2022.model.OrderDetail;
-import com.endava.mentorship2022.model.OrderStatus;
-import com.endava.mentorship2022.model.Product;
-import com.endava.mentorship2022.model.TechnicalDetail;
-import com.endava.mentorship2022.model.User;
-import com.endava.mentorship2022.model.UserStatus;
+import com.endava.mentorship2022.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,7 +44,8 @@ class CheckoutServiceTest {
                 "Str. add",
                 "06546465645",
                 LocalDate.now(),
-                UserStatus.ACTIVE);
+                UserStatus.ACTIVE,
+                Set.of(new Role("ADMIN")));
 
         Category category = new Category(1L,
                 "Category",
