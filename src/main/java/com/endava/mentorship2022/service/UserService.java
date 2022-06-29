@@ -68,7 +68,6 @@ public class UserService {
         usersList.sort(compareByBirthdateAndByFirstName);
 
         return usersList;
-
     }
 
 }

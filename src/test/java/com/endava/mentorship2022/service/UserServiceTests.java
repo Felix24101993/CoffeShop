@@ -1,6 +1,7 @@
 package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.UserNotFound;
+import com.endava.mentorship2022.model.Role;
 import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.model.UserStatus;
 import com.endava.mentorship2022.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.endava.mentorship2022.model.UserStatus.ACTIVE;
 import static com.endava.mentorship2022.model.UserStatus.PENDING;
@@ -44,7 +46,8 @@ class UserServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                PENDING);
+                PENDING,
+                Set.of(new Role("ADMIN")));
 
         User user2 = new User(
                 1L,
@@ -55,7 +58,8 @@ class UserServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                PENDING);
+                PENDING,
+                Set.of(new Role("ADMIN")));
 
         List<User> usersList = List.of(user1, user2);
         when(userRepository.findAll()).thenReturn(usersList);
@@ -81,7 +85,8 @@ class UserServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                PENDING);
+                PENDING,
+                Set.of(new Role("ADMIN")));
 
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(userToBeFound));
 
@@ -115,7 +120,8 @@ class UserServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                PENDING);
+                PENDING,
+                Set.of(new Role("ADMIN")));
 
         User newUser = new User(
                 1L,
@@ -126,7 +132,8 @@ class UserServiceTests {
                 "updated",
                 "updated",
                 LocalDate.of(2222, 2, 2),
-                PENDING);
+                PENDING,
+                Set.of(new Role("ADMIN")));
 
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(userToUpdate));
         when(userRepository.save(userToUpdate)).thenReturn(newUser);
@@ -161,7 +168,8 @@ class UserServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                PENDING);
+                PENDING,
+                Set.of(new Role("ADMIN")));
 
         User updatedUser = new User(
                 1L,
@@ -172,7 +180,8 @@ class UserServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                ACTIVE);
+                ACTIVE,
+                Set.of(new Role("ADMIN")));
 
         when(userRepository.save(user)).thenReturn(updatedUser);
 
