@@ -2,8 +2,8 @@ package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.CartItemException;
 import com.endava.mentorship2022.model.CartItem;
-import com.endava.mentorship2022.model.Category;
 import com.endava.mentorship2022.model.Product;
+import com.endava.mentorship2022.model.Role;
 import com.endava.mentorship2022.model.TechnicalDetail;
 import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.model.UserStatus;
@@ -39,7 +39,6 @@ class CartItemServiceTest {
     private CartItemService cartItemService;
 
     User user;
-    Category category;
     Product product1;
     Product product2;
     List<CartItem> cartItems;
@@ -56,12 +55,8 @@ class CartItemServiceTest {
                 "Str. add",
                 "06546465645",
                 LocalDate.now(),
-                UserStatus.ACTIVE);
-
-        category = new Category(1L,
-                "Category",
-                "category",
-                null);
+                UserStatus.ACTIVE,
+                Set.of(new Role("ADMIN")));
 
         product1 = new Product(1L,
                 "Product 1",
@@ -71,7 +66,7 @@ class CartItemServiceTest {
                 15.49F,
                 1500,
                 true,
-                category,
+                null,
                 Set.of(new TechnicalDetail(1L, "Brand:", "No-name", new Product(1L)))
         );
 
@@ -83,7 +78,7 @@ class CartItemServiceTest {
                 45.86F,
                 1000,
                 true,
-                category,
+                null,
                 Set.of(new TechnicalDetail(1L, "Release Date:", "10/10/2020", new Product(2L)))
         );
 
@@ -117,7 +112,7 @@ class CartItemServiceTest {
                 75.86F,
                 2000,
                 true,
-                category,
+                null,
                 Set.of(new TechnicalDetail(1L, "Type:", "no-type", new Product(3L)))
         );
         given(userService.findById(anyLong())).willReturn(user);
