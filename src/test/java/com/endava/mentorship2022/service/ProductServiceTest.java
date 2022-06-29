@@ -171,7 +171,6 @@ class ProductServiceTest {
                 null
         );
 
-
         when(productRepository.save(product)).thenReturn(product);
 
         // when
