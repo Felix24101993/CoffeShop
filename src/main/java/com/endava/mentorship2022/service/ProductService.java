@@ -2,10 +2,12 @@ package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.ProductNotFound;
 import com.endava.mentorship2022.model.Product;
+import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @AllArgsConstructor
@@ -42,5 +44,27 @@ public class ProductService {
         productToUpdate.setPrice(newProduct.getPrice());
         productToUpdate.setStock(newProduct.getStock());
         return productRepository.save(productToUpdate);
+    }
+    public List<Product> findAllProductsSortedByPriceLowtoHigh() {
+        return sortProductsByPriceLowToHigh(findAllProducts());
+    }
+
+    private List<Product> sortProductsByPriceLowToHigh(List<Product> products) {
+        Comparator<Product> comparePriceFromLowestToHighest =
+                Comparator.comparing(Product::getPrice);
+        products.sort(comparePriceFromLowestToHighest);
+        return products;
+    }
+
+    public List<Product> findAllProductsSortedByPriceHighToLow() {
+        return sortProductsByPriceHighToLow(findAllProducts());
+    }
+
+    private List<Product> sortProductsByPriceHighToLow(List<Product> products) {
+        Comparator<Product> comparePriceFromHighestToLowest =
+                Comparator.comparing(Product::getPrice)
+                        .reversed();
+        products.sort(comparePriceFromHighestToLowest);
+        return products;
     }
 }
