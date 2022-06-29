@@ -22,6 +22,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/doc/**").permitAll()
                 .antMatchers("/users/**").hasAuthority("ADMIN")
@@ -33,7 +34,6 @@ public class SecurityConfiguration {
                 .and()
                 .httpBasic()
                 .and().build();
-
     }
 
     @Bean
