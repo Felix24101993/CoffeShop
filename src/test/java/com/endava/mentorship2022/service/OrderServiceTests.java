@@ -325,15 +325,14 @@ class OrderServiceTests {
                 null,
                 PENDING
         );
-        given(userService.findById(anyLong())).willReturn(user);
         given(orderRepository.save(any(Order.class))).willReturn(expectedOrder);
 
         //when
-        Order nactualOrder = orderService.createOrder(1L, cartItems);
+        Order actualOrder = orderService.createOrder(user, cartItems);
 
         // then
         verify(orderRepository).save(any());
-        AssertionsForClassTypes.assertThat(nactualOrder).isEqualTo(expectedOrder);
+        AssertionsForClassTypes.assertThat(actualOrder).isEqualTo(expectedOrder);
 
     }
 
