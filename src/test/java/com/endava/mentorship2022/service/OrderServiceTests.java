@@ -15,9 +15,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.endava.mentorship2022.model.OrderStatus.PENDING;
-import static com.endava.mentorship2022.model.UserStatus.ACTIVE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -199,7 +199,8 @@ class OrderServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                ACTIVE
+                UserStatus.PENDING,
+                Set.of(new Role("ADMIN"))
         );
         given(userService.findById(anyLong())).willReturn(user);
         given(orderRepository.findByUser(any(User.class))).willReturn(orderList);
@@ -273,7 +274,9 @@ class OrderServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                ACTIVE);
+                UserStatus.PENDING,
+                Set.of(new Role("ADMIN"))
+        );
 
         Product product1 = new Product(
                 1L,
@@ -323,15 +326,14 @@ class OrderServiceTests {
                 null,
                 PENDING
         );
-        given(userService.findById(anyLong())).willReturn(user);
         given(orderRepository.save(any(Order.class))).willReturn(expectedOrder);
 
         //when
-        Order nactualOrder = orderService.createOrder(1L, cartItems);
+        Order actualOrder = orderService.createOrder(user, cartItems);
 
         // then
         verify(orderRepository).save(any());
-        AssertionsForClassTypes.assertThat(nactualOrder).isEqualTo(expectedOrder);
+        AssertionsForClassTypes.assertThat(actualOrder).isEqualTo(expectedOrder);
 
     }
 
