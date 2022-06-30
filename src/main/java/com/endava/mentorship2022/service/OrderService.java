@@ -2,12 +2,16 @@
 package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.OrderNotFound;
-import com.endava.mentorship2022.model.*;
+import com.endava.mentorship2022.model.CartItem;
+import com.endava.mentorship2022.model.Order;
+import com.endava.mentorship2022.model.OrderDetail;
+import com.endava.mentorship2022.model.OrderStatus;
+import com.endava.mentorship2022.model.Product;
+import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -48,22 +52,22 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Order createOrder(long userId, List<CartItem> cartItems) {
-
-        User user = userService.findById(userId);
+    public Order createOrder(User user, List<CartItem> cartItems) {
         Order newOrder = new Order();
-        newOrder.setTotal(calculateTotal(cartItems));
         newOrder.setUser(user);
+        newOrder.setTotal(calculateTotal(cartItems));
         Set<OrderDetail> orderDetails = newOrder.getOrderDetails();
 
         for (CartItem cartItem : cartItems) {
             Product product = cartItem.getProduct();
+
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrder(newOrder);
             orderDetail.setProduct(product);
             orderDetail.setQuantity(cartItem.getQuantity());
             orderDetail.setUnitPrice(product.getPrice());
             orderDetail.setSubtotal(cartItem.getSubtotal());
+
             orderDetails.add(orderDetail);
         }
 

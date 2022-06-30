@@ -33,9 +33,6 @@ class CartItemServiceTest {
     private CartItemRepository cartItemRepository;
 
     @Mock
-    private UserService userService;
-
-    @Mock
     private ProductService productService;
 
     private CartItemService cartItemService;
@@ -50,7 +47,7 @@ class CartItemServiceTest {
 
     @BeforeEach
     void setUp() {
-        cartItemService = new CartItemService(cartItemRepository, userService, productService);
+        cartItemService = new CartItemService(cartItemRepository, productService);
 
         user = new User(1L,
                 "FirstName",
@@ -99,7 +96,7 @@ class CartItemServiceTest {
         given(cartItemRepository.findCartItemsByUserId(anyLong())).willReturn(cartItems);
 
         // when
-        List<CartItem> actualCartItems = cartItemService.findCartItemsByUser(anyLong());
+        List<CartItem> actualCartItems = cartItemService.findCartItemsByUser(user);
 
         // then
         verify(cartItemRepository).findCartItemsByUserId(anyLong());
@@ -120,14 +117,13 @@ class CartItemServiceTest {
                 null,
                 Set.of(new TechnicalDetail(1L, "Type:", "no-type", new Product(3L)))
         );
-        given(userService.findById(anyLong())).willReturn(user);
         given(productService.findById(anyLong())).willReturn(product3);
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(null);
         CartItem newCartItem = new CartItem(3L, (short) 3, user, product3);
         given(cartItemRepository.save(any(CartItem.class))).willReturn(newCartItem);
 
         // when
-        String actual = cartItemService.addProductToCart(user.getId(), product3.getId(), (short) 3);
+        String actual = cartItemService.addProductToCart(user, product3.getId(), (short) 3);
 
         // then
         assertThat(actual).isEqualTo("Product " + product3.getName() + " x" + 3 + " has been added to the cart.");
@@ -136,14 +132,13 @@ class CartItemServiceTest {
     @Test
     void canAddExistentProductToCart() {
         // given
-        given(userService.findById(anyLong())).willReturn(user);
         given(productService.findById(anyLong())).willReturn(product1);
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(cartItems.get(0));
         CartItem newCartItem = new CartItem(2L, (short) 5, user, product1);
         given(cartItemRepository.save(any(CartItem.class))).willReturn(newCartItem);
 
         // when
-        String actual = cartItemService.addProductToCart(user.getId(), product1.getId(), (short) 3);
+        String actual = cartItemService.addProductToCart(user, product1.getId(), (short) 3);
 
         // then
         assertThat(actual).isEqualTo("Product " + product1.getName() + " x" + 5 + " has been added to the cart.");
@@ -152,12 +147,11 @@ class CartItemServiceTest {
     @Test
     void willThrowCannotAddProductToCartMaximumQuantityExceeded_addQuantityForExistent() {
         // given
-        given(userService.findById(anyLong())).willReturn(user);
         given(productService.findById(anyLong())).willReturn(product1);
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(cartItems.get(0));
 
         // when
-        assertThatThrownBy(() -> cartItemService.addProductToCart(user.getId(), product1.getId(), (short) 14))
+        assertThatThrownBy(() -> cartItemService.addProductToCart(user, product1.getId(), (short) 14))
                 .isInstanceOf(CartItemException.class)
                 .hasMessageContaining("Could not add more " + 14 + " item(s) " +
                         " because there's already " + 2 + " item(s) " +
@@ -172,13 +166,12 @@ class CartItemServiceTest {
         // given
 
         // when
-        assertThatThrownBy(() -> cartItemService.addProductToCart(user.getId(), product1.getId(), (short) 20))
+        assertThatThrownBy(() -> cartItemService.addProductToCart(user, product1.getId(), (short) 20))
                 .isInstanceOf(CartItemException.class)
                 .hasMessageContaining("Could not add " + 20 + " items " +
                         "to your shopping cart. Maximum allowed quantity is 15.");
 
         // then
-        verify(userService, never()).findById(anyLong());
         verify(productService, never()).findById(anyLong());
         verify(cartItemRepository, never()).findCartItemByUserIdAndProductId(anyLong(), anyLong());
         verify(cartItemRepository, never()).save(any(CartItem.class));
@@ -190,7 +183,7 @@ class CartItemServiceTest {
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(cartItems.get(0));
 
         // when
-        String actual = cartItemService.updateProductQuantity(user.getId(), product1.getId(), (short) 3);
+        String actual = cartItemService.updateProductQuantity(user, product1.getId(), (short) 3);
 
         // then
         verify(cartItemRepository).updateProductQuantity(anyShort(), anyLong(), anyLong());
@@ -203,7 +196,7 @@ class CartItemServiceTest {
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(null);
 
         // when
-        String actual = cartItemService.updateProductQuantity(user.getId(), product1.getId(), (short) 3);
+        String actual = cartItemService.updateProductQuantity(user, product1.getId(), (short) 3);
 
         // then
         assertThat(actual).isEqualTo("The product is not in the cart.");
@@ -216,7 +209,7 @@ class CartItemServiceTest {
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(cartItems.get(0));
 
         // when
-        assertThatThrownBy(() -> cartItemService.updateProductQuantity(user.getId(), product1.getId(), (short) 18))
+        assertThatThrownBy(() -> cartItemService.updateProductQuantity(user, product1.getId(), (short) 18))
                 .isInstanceOf(CartItemException.class)
                 .hasMessageContaining("Could not update quantity to " + 18 +
                         ". Maximum allowed quantity is 15.");
@@ -231,7 +224,7 @@ class CartItemServiceTest {
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(cartItems.get(0));
 
         // when
-        String actual = cartItemService.removeProductFromCart(anyLong(), anyLong());
+        String actual = cartItemService.removeProductFromCart(user, product1.getId());
 
         // then
         verify(cartItemRepository).deleteCartItemByUserIdAndProductId(anyLong(), anyLong());
@@ -244,7 +237,7 @@ class CartItemServiceTest {
         given(cartItemRepository.findCartItemByUserIdAndProductId(anyLong(), anyLong())).willReturn(null);
 
         // when
-        String actual = cartItemService.removeProductFromCart(anyLong(), anyLong());
+        String actual = cartItemService.removeProductFromCart(user, 55L);
 
         // then
         assertThat(actual).isEqualTo("The product is not in the cart.");
@@ -257,7 +250,7 @@ class CartItemServiceTest {
         given(cartItemRepository.findCartItemsByUserId(anyLong())).willReturn(cartItems);
 
         // when
-        String actual = cartItemService.deleteCartByUser(anyLong());
+        String actual = cartItemService.deleteCartByUser(user);
 
         // then
         assertThat(actual).isEqualTo("Cart has been deleted!");
@@ -269,7 +262,7 @@ class CartItemServiceTest {
         given(cartItemRepository.findCartItemsByUserId(anyLong())).willReturn(Collections.emptyList());
 
         // when
-        String actual = cartItemService.deleteCartByUser(anyLong());
+        String actual = cartItemService.deleteCartByUser(user);
 
         // then
         verify(cartItemRepository, never()).deleteCartItemsByUserId(anyLong());
