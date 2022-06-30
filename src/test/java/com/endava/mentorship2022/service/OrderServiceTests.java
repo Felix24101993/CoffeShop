@@ -147,7 +147,7 @@ class OrderServiceTests {
     }
 
     @Test
-    void willThrowOrderNotFoundForDeleteTest() {
+    void deleteOrderExceptionTest() {
         // given
         Order orderToDelete = new Order(
                 1L,
