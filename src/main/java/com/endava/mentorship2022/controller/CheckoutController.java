@@ -1,11 +1,14 @@
 package com.endava.mentorship2022.controller;
 
+import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.service.CheckoutService;
+import com.endava.mentorship2022.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @AllArgsConstructor
 @RestController
@@ -14,9 +17,12 @@ public class CheckoutController {
 
     private final CheckoutService checkoutService;
 
-    @PostMapping("/{userId}")
-    public String placeOrder(@PathVariable long userId) {
-        return checkoutService.placeOrder(userId);
+    private final UserService userService;
+
+    @PostMapping()
+    public String placeOrder(Principal principal) {
+        User user = userService.findUserByEmail(principal.getName());
+        return checkoutService.placeOrder(user);
     }
 
 }

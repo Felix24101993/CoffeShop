@@ -14,7 +14,6 @@ import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -28,15 +27,13 @@ class CheckoutServiceTest {
     private CartItemService cartItemService;
     private CheckoutService checkoutService;
 
+    User user;
+
     @BeforeEach
     void setUp() {
         checkoutService = new CheckoutService(orderService, cartItemService);
-    }
 
-    @Test
-    void canPlaceOrder() {
-        // given
-        User user = new User(1L,
+        user = new User(1L,
                 "FirstName",
                 "LastName",
                 "first_name@gmail.com",
@@ -46,12 +43,11 @@ class CheckoutServiceTest {
                 LocalDate.now(),
                 UserStatus.ACTIVE,
                 Set.of(new Role("ADMIN")));
+    }
 
-        Category category = new Category(1L,
-                "Category",
-                "category",
-                null);
-
+    @Test
+    void canPlaceOrder() {
+        // given
         Product product1 = new Product(1L,
                 "Product 1",
                 "product-1",
@@ -60,7 +56,7 @@ class CheckoutServiceTest {
                 15.49F,
                 1500,
                 true,
-                category,
+                null,
                 Set.of(new TechnicalDetail(1L, "Brand:", "No-name", new Product(1L)))
         );
 
@@ -72,7 +68,7 @@ class CheckoutServiceTest {
                 45.86F,
                 1000,
                 true,
-                category,
+                null,
                 Set.of(new TechnicalDetail(1L, "Release Date:", "10/10/2020", new Product(2L)))
         );
 
@@ -93,12 +89,12 @@ class CheckoutServiceTest {
                 OrderStatus.PENDING
         );
 
-        given(cartItemService.findCartItemsByUser(anyLong())).willReturn(cartItems);
-        given(orderService.createOrder(anyLong(), any(List.class))).willReturn(order);
-        given(cartItemService.deleteCartByUser(anyLong())).willReturn("Cart has been deleted!");
+        given(cartItemService.findCartItemsByUser(any(User.class))).willReturn(cartItems);
+        given(orderService.createOrder(any(User.class), any(List.class))).willReturn(order);
+        given(cartItemService.deleteCartByUser(any(User.class))).willReturn("Cart has been deleted!");
 
         // when
-        String actual = checkoutService.placeOrder(anyLong());
+        String actual = checkoutService.placeOrder(user);
 
         // then
         assertThat(actual).isEqualTo("Order has been placed. Thank you for purchase.");
@@ -107,14 +103,14 @@ class CheckoutServiceTest {
     @Test
     void cannotPlaceOrderCartIsEmpty() {
         // given
-        given(cartItemService.findCartItemsByUser(anyLong())).willReturn(Collections.emptyList());
+        given(cartItemService.findCartItemsByUser(any(User.class))).willReturn(Collections.emptyList());
 
         // when
-        String actual = checkoutService.placeOrder(anyLong());
+        String actual = checkoutService.placeOrder(user);
 
         // then
         assertThat(actual).isEqualTo("Cart is empty.");
-        verify(orderService, never()).createOrder(anyLong(), any(List.class));
-        verify(cartItemService, never()).deleteCartByUser(anyLong());
+        verify(orderService, never()).createOrder(any(User.class), any(List.class));
+        verify(cartItemService, never()).deleteCartByUser(any(User.class));
     }
 }
