@@ -20,6 +20,14 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/page/{pageNum}")
+    public List<User> findAllByPage(@PathVariable int pageNum,
+                                    @RequestParam(defaultValue = "10") int pageSize,
+                                    @RequestParam(defaultValue = "id") String sortField,
+                                    @RequestParam(defaultValue = "asc") String sortDir ) {
+        return userService.findAllByPage(pageNum, pageSize, sortField, sortDir);
+    }
+
     // method for getting all the users sorted by their birthdate and after that by their first name
     @GetMapping("/sorted")
     public List<User> findAllSorted() {
