@@ -2,10 +2,16 @@ package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.ProductNotFound;
 import com.endava.mentorship2022.model.Product;
+import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @AllArgsConstructor
@@ -42,5 +48,16 @@ public class ProductService {
         productToUpdate.setPrice(newProduct.getPrice());
         productToUpdate.setStock(newProduct.getStock());
         return productRepository.save(productToUpdate);
+    }
+    public List<Product> findAllByPage(int pageNum, int pageSize, String sortField, String sortDir) {
+        Sort sort = Sort.by(sortField);
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        if (pageNum < 1) pageNum = 1;
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+
+        Page<Product> pageProducts = productRepository.findAll(pageable);
+
+        return pageProducts.getContent();
     }
 }
