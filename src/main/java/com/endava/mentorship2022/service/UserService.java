@@ -5,6 +5,10 @@ import com.endava.mentorship2022.model.User;
 import com.endava.mentorship2022.model.UserStatus;
 import com.endava.mentorship2022.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -18,6 +22,18 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public List<User> findAllByPage(int pageNum, int pageSize, String sortField, String sortDir) {
+        Sort sort = Sort.by(sortField);
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        if (pageNum < 1) pageNum = 1;
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+
+        Page<User> pageUsers = userRepository.findAll(pageable);
+
+        return pageUsers.getContent();
     }
 
     public User findById(Long id) {
@@ -73,4 +89,5 @@ public class UserService {
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
+
 }
