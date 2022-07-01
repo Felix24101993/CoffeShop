@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.endava.mentorship2022.model.OrderStatus.PENDING;
 import static com.endava.mentorship2022.model.UserStatus.ACTIVE;
@@ -28,6 +29,7 @@ class OrderServiceTests {
 
     @Mock
     private OrderRepository orderRepository;
+
     @Mock
     private UserService userService;
 
@@ -49,8 +51,7 @@ class OrderServiceTests {
                         300,
                         null,
                         null,
-                        PENDING
-                ),
+                        PENDING),
                 new Order(
                         2L,
                         LocalDate.of(2022, 1, 1),
@@ -58,7 +59,6 @@ class OrderServiceTests {
                         null,
                         null,
                         PENDING)
-
         );
         given(orderRepository.findAll()).willReturn(orders);
 
@@ -71,8 +71,7 @@ class OrderServiceTests {
     }
 
     @Test
-    @DisplayName("Should find an order by ID")
-    void findOrderById() {
+    void findOrderByIdTest() {
         // given
         Order orderToBeFound = new Order(
                 1L,
@@ -94,7 +93,7 @@ class OrderServiceTests {
 
     @Test
     @DisplayName("Should throw OrderNotFound Exception")
-    void findOrderByIdException() {
+    void findOrderByIdExceptionTest() {
         // given
         given(orderRepository.findById(anyLong()))
                 .willReturn(Optional.empty());
@@ -106,7 +105,7 @@ class OrderServiceTests {
     }
 
     @Test
-    void saveOrder() {
+    void saveOrderTest() {
         // given
         Order order1 = new Order(
                 1L,
@@ -128,7 +127,7 @@ class OrderServiceTests {
 
 
     @Test
-    void deleteOrderById() {
+    void deleteOrderByIdTest() {
         // given
         Order orderToDelete = new Order(
                 1L,
@@ -148,7 +147,7 @@ class OrderServiceTests {
     }
 
     @Test
-    void willThrowOrderNotFoundForDelete() {
+    void deleteOrderExceptionTest() {
         // given
         Order orderToDelete = new Order(
                 1L,
@@ -170,7 +169,7 @@ class OrderServiceTests {
     }
 
     @Test
-    void findAllOrdersByUser() {
+    void findAllOrdersByUserTest() {
         // given
         List<Order> orderList = List.of(
                 new Order(
@@ -199,7 +198,8 @@ class OrderServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                ACTIVE
+                ACTIVE,
+                Set.of(new Role("ADMIN"))
         );
         given(userService.findById(anyLong())).willReturn(user);
         given(orderRepository.findByUser(any(User.class))).willReturn(orderList);
@@ -212,7 +212,7 @@ class OrderServiceTests {
     }
 
     @Test
-    void updateOrderStatus() {
+    void updateOrderStatusTest() {
         // given
         Order orderToUpdate = new Order(
                 1L,
@@ -240,7 +240,7 @@ class OrderServiceTests {
     }
 
     @Test
-    void willThrowOrderNotFoundForUpdateStatus() {
+    void willThrowOrderNotFoundForUpdateStatusTest() {
         // given
         Order order = new Order(
                 1L,
@@ -262,7 +262,7 @@ class OrderServiceTests {
     }
 
     @Test
-    void createOrder() {
+    void createOrderTest() {
         //given
         User user = new User(
                 1L,
@@ -273,7 +273,9 @@ class OrderServiceTests {
                 "Romania, Bucuresti, Strada Gabroveni 030089",
                 "+40721058124",
                 LocalDate.of(2010, 1, 1),
-                ACTIVE);
+                ACTIVE,
+                Set.of(new Role("ADMIN"))
+        );
 
         Product product1 = new Product(
                 1L,
@@ -323,15 +325,14 @@ class OrderServiceTests {
                 null,
                 PENDING
         );
-        given(userService.findById(anyLong())).willReturn(user);
         given(orderRepository.save(any(Order.class))).willReturn(expectedOrder);
 
         //when
-        Order nactualOrder = orderService.createOrder(1L, cartItems);
+        Order actualOrder = orderService.createOrder(user, cartItems);
 
         // then
         verify(orderRepository).save(any());
-        AssertionsForClassTypes.assertThat(nactualOrder).isEqualTo(expectedOrder);
+        AssertionsForClassTypes.assertThat(actualOrder).isEqualTo(expectedOrder);
 
     }
 
