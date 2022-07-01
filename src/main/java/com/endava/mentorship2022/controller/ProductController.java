@@ -19,13 +19,12 @@ public class ProductController {
     public List<Product> findAll(){
         return productService.findAllProducts();
     }
-    @GetMapping("/sortedlth")
-    public List<Product> findAllSortedLTH() {
-        return productService.findAllProductsSortedByPriceLowtoHigh();
-    }
-    @GetMapping("/sortedhtl")
-    public List<Product> findAllSortedHTL() {
-        return productService.findAllProductsSortedByPriceHighToLow();
+    @GetMapping("/page/{pageNum}")
+    public List<Product> findAllByPage(@PathVariable int pageNum,
+                                    @RequestParam(defaultValue = "10") int pageSize,
+                                    @RequestParam(defaultValue = "id") String sortField,
+                                    @RequestParam(defaultValue = "asc") String sortDir ) {
+        return productService.findAllByPage(pageNum, pageSize, sortField, sortDir);
     }
     @GetMapping("{id}")
     public Product findProductById(@PathVariable long id){
