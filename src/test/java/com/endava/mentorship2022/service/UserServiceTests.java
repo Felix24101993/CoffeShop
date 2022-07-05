@@ -3,7 +3,6 @@ package com.endava.mentorship2022.service;
 import com.endava.mentorship2022.exception.UserNotFound;
 import com.endava.mentorship2022.model.Role;
 import com.endava.mentorship2022.model.User;
-import com.endava.mentorship2022.model.UserStatus;
 import com.endava.mentorship2022.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -190,6 +189,67 @@ class UserServiceTests {
 
         // then
         assertThat(resultedUser).isEqualTo(updatedUser);
+    }
+
+    @Test
+    void shouldSaveOneUser() {
+        // given
+        User user = new User(1L,
+                "Gigel",
+                "Popescu",
+                "gigelp@gmail.com",
+                "pass",
+                "Str. Paltinului, Pitesti, Arges",
+                "0700112233",
+                LocalDate.now(),
+                PENDING,
+                Set.of(new Role("ADMIN"))
+        );
+        when(userRepository.save(user)).thenReturn(user);
+
+        // when
+        User actualUser = userService.save(user);
+
+        // then
+        assertThat(actualUser).isEqualTo(user);
+
+    }
+
+    @Test
+    void shouldDeleteUserById() {
+        // given
+        User user = new User(1L,
+                "Gigel",
+                "Popescu",
+                "gigelp@gmail.com",
+                "pass",
+                "Str. Paltinului, Pitesti, Arges",
+                "0700112233",
+                LocalDate.now(),
+                PENDING,
+                Set.of(new Role("ADMIN"))
+        );
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+        // when
+        userService.deleteById(1L);
+
+        // then
+        verify(userRepository).deleteById(1L);
+
+    }
+
+    @Test
+    void shouldThrowUserNotFoundForDeleteById() {
+        // given
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        //when
+        assertThrows(UserNotFound.class, () -> userService.deleteById(anyLong()));
+
+        // then
+        verify(userRepository, never()).deleteById(anyLong());
     }
 
 }
