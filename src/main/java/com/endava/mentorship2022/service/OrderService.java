@@ -12,6 +12,7 @@ import com.endava.mentorship2022.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +39,16 @@ public class OrderService {
     }
 
     public Order save(Order order) {
+        // Make a copy of orderDetails
+        Set<OrderDetail> orderDetails = new HashSet<>(order.getOrderDetails());
+        order.setOrderDetails(null);
+
+        // Save without orderDetails first, in order to get an orderId to use in orderDetails
+        orderRepository.save(order);
+
+        // Add orderDetails and then save order
+        orderDetails.forEach(orderDetail -> orderDetail.setOrder(order));
+        order.setOrderDetails(orderDetails);
         return orderRepository.save(order);
     }
 
@@ -72,18 +83,15 @@ public class OrderService {
         }
 
         return orderRepository.save(newOrder);
-
     }
 
     private float calculateTotal(List<CartItem> cartItems) {
-
         float total = 0.0F;
         for (CartItem cartItem : cartItems) {
             total += cartItem.getSubtotal();
         }
 
         return total;
-
     }
 
 }
