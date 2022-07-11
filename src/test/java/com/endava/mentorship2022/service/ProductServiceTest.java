@@ -37,9 +37,6 @@ class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
-    @Mock
-    private CategoryService categoryService;
-
     @InjectMocks
     private ProductService productService;
 
@@ -47,7 +44,7 @@ class ProductServiceTest {
     @DisplayName("Should find all products")
     void findAllProductsTest() {
         // given
-        Product product1 = new Product(1l,
+        Product product1 = new Product(1L,
                 "Tchibo cafea macinata",
                 "Tchibo-cafea-macinata",
                 "O cafea macinata foarte buna",
@@ -59,7 +56,7 @@ class ProductServiceTest {
                 null
         );
 
-        Product product2 = new Product(2l,
+        Product product2 = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -86,7 +83,7 @@ class ProductServiceTest {
     @DisplayName("Should find a product by ID")
     void findProductByIdTest() throws ProductNotFound {
         // given
-        Product productToBeFound = new Product(2l,
+        Product productToBeFound = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -121,7 +118,7 @@ class ProductServiceTest {
     @DisplayName("Should update a product")
     void updateProductTest() {
         // given
-        Product productToBeUpdated = new Product(2l,
+        Product productToBeUpdated = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -133,7 +130,7 @@ class ProductServiceTest {
                 null
         );
 
-        Product newProduct = new Product(2l,
+        Product newProduct = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -169,7 +166,7 @@ class ProductServiceTest {
     @DisplayName("Should save a product")
     void saveProductTest() {
         // given
-        Product product = new Product(2l,
+        Product product = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -255,7 +252,7 @@ class ProductServiceTest {
     @Test
     void shouldDeleteById() {
         // given
-        Product product = new Product(2l,
+        Product product = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -281,7 +278,7 @@ class ProductServiceTest {
     void shouldFindAllByPage() {
         // given
         List<Product> products = List.of(
-                new Product(1l,
+                new Product(1L,
                         "Lavazza cafea boabe",
                         "Lavazza-cafea-boabe",
                         "O cafea boabe foarte buna",
@@ -291,7 +288,7 @@ class ProductServiceTest {
                         false,
                         null,
                         null),
-                new Product(2l,
+                new Product(2L,
                         "Lavazza cafea boabe",
                         "Lavazza-cafea-boabe",
                         "O cafea boabe foarte buna",
@@ -302,7 +299,7 @@ class ProductServiceTest {
                         null,
                         null)
         );
-        Page foundPage = new PageImpl<>(products);
+        Page<Product> foundPage = new PageImpl<>(products);
 
         when(productRepository.findAll(any(Pageable.class))).thenReturn(foundPage);
 

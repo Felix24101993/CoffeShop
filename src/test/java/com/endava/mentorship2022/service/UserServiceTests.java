@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -250,6 +253,64 @@ class UserServiceTests {
 
         // then
         verify(userRepository, never()).deleteById(anyLong());
+    }
+
+    @Test
+    void shouldFindAllByPageTest() {
+        // given
+        List<User> users = List.of(
+                new User(1L,
+                        "Stanciu",
+                        "Angel",
+                        "angel@gmail.com",
+                        "pass",
+                        "Romania, Bucuresti, Strada Gabroveni 030089",
+                        "+40721058124",
+                        LocalDate.of(2010, 1, 1),
+                        PENDING,
+                        Set.of(new Role("ADMIN"))),
+                new User(2L,
+                        "Stanciu",
+                        "Angel",
+                        "angel@gmail.com",
+                        "pass",
+                        "Romania, Bucuresti, Strada Gabroveni 030089",
+                        "+40721058124",
+                        LocalDate.of(2010, 1, 1),
+                        ACTIVE,
+                        Set.of(new Role("ADMIN")))
+        );
+        Page<User> foundPage = new PageImpl<>(users);
+
+        when(userRepository.findAll(any(Pageable.class))).thenReturn(foundPage);
+
+        // when
+        List<User> actual = userService.findAllByPage(1, 5, "id", "asc");
+
+        // then
+        assertThat(actual).isEqualTo(users);
+    }
+
+    @Test
+    void shouldFindUserByEmail() {
+        // given
+        User user = new User(1L,
+                "Stanciu",
+                "Angel",
+                "angel@gmail.com",
+                "pass",
+                "Romania, Bucuresti, Strada Gabroveni 030089",
+                "+40721058124",
+                LocalDate.of(2010, 1, 1),
+                ACTIVE,
+                Set.of(new Role("ADMIN")));
+        when(userRepository.findUserByEmail(anyString())).thenReturn(user);
+
+        // when
+        User actual = userService.findUserByEmail("angel@gmail.com");
+
+        // then
+        assertThat(actual).isEqualTo(user);
     }
 
 }
