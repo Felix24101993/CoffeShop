@@ -2,6 +2,7 @@ package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.ProductNotFound;
 import com.endava.mentorship2022.model.Product;
+import com.endava.mentorship2022.model.TechnicalDetail;
 import com.endava.mentorship2022.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,11 +21,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,9 +37,6 @@ class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
-    @Mock
-    private CategoryService categoryService;
-
     @InjectMocks
     private ProductService productService;
 
@@ -40,7 +44,7 @@ class ProductServiceTest {
     @DisplayName("Should find all products")
     void findAllProductsTest() {
         // given
-        Product product1 = new Product(1l,
+        Product product1 = new Product(1L,
                 "Tchibo cafea macinata",
                 "Tchibo-cafea-macinata",
                 "O cafea macinata foarte buna",
@@ -52,7 +56,7 @@ class ProductServiceTest {
                 null
         );
 
-        Product product2 = new Product(2l,
+        Product product2 = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -79,7 +83,7 @@ class ProductServiceTest {
     @DisplayName("Should find a product by ID")
     void findProductByIdTest() throws ProductNotFound {
         // given
-        Product productToBeFound = new Product(2l,
+        Product productToBeFound = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -114,7 +118,7 @@ class ProductServiceTest {
     @DisplayName("Should update a product")
     void updateProductTest() {
         // given
-        Product productToBeUpdated = new Product(2l,
+        Product productToBeUpdated = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -126,7 +130,7 @@ class ProductServiceTest {
                 null
         );
 
-        Product newProduct = new Product(2l,
+        Product newProduct = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -162,7 +166,7 @@ class ProductServiceTest {
     @DisplayName("Should save a product")
     void saveProductTest() {
         // given
-        Product product = new Product(2l,
+        Product product = new Product(2L,
                 "Lavazza cafea boabe",
                 "Lavazza-cafea-boabe",
                 "O cafea boabe foarte buna",
@@ -171,7 +175,9 @@ class ProductServiceTest {
                 10,
                 false,
                 null,
-                null
+                Set.of(
+                        new TechnicalDetail(1L, "Brand", "Lavazza", null)
+                )
         );
 
         when(productRepository.save(product)).thenReturn(product);
@@ -241,6 +247,67 @@ class ProductServiceTest {
         }
 
         return productList;
+    }
+
+    @Test
+    void shouldDeleteById() {
+        // given
+        Product product = new Product(2L,
+                "Lavazza cafea boabe",
+                "Lavazza-cafea-boabe",
+                "O cafea boabe foarte buna",
+                "Lavazza",
+                15,
+                10,
+                false,
+                null,
+                Set.of(
+                        new TechnicalDetail(1L, "Brand", "Lavazza", null)
+                )
+        );
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
+
+        // when
+        productService.deleteById(2L);
+
+        // then
+        verify(productRepository).deleteById(2L);
+    }
+
+    @Test
+    void shouldFindAllByPage() {
+        // given
+        List<Product> products = List.of(
+                new Product(1L,
+                        "Lavazza cafea boabe",
+                        "Lavazza-cafea-boabe",
+                        "O cafea boabe foarte buna",
+                        "Lavazza",
+                        15,
+                        10,
+                        false,
+                        null,
+                        null),
+                new Product(2L,
+                        "Lavazza cafea boabe",
+                        "Lavazza-cafea-boabe",
+                        "O cafea boabe foarte buna",
+                        "Lavazza",
+                        15,
+                        10,
+                        false,
+                        null,
+                        null)
+        );
+        Page<Product> foundPage = new PageImpl<>(products);
+
+        when(productRepository.findAll(any(Pageable.class))).thenReturn(foundPage);
+
+        // when
+        List<Product> actual = productService.findAllByPage(1, 5, "id", "asc");
+
+        // then
+        assertThat(actual).isEqualTo(products);
     }
 
 }
