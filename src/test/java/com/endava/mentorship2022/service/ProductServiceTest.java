@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,7 +26,9 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -245,6 +250,67 @@ class ProductServiceTest {
         }
 
         return productList;
+    }
+
+    @Test
+    void shouldDeleteById() {
+        // given
+        Product product = new Product(2l,
+                "Lavazza cafea boabe",
+                "Lavazza-cafea-boabe",
+                "O cafea boabe foarte buna",
+                "Lavazza",
+                15,
+                10,
+                false,
+                null,
+                Set.of(
+                        new TechnicalDetail(1L, "Brand", "Lavazza", null)
+                )
+        );
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
+
+        // when
+        productService.deleteById(2L);
+
+        // then
+        verify(productRepository).deleteById(2L);
+    }
+
+    @Test
+    void shouldFindAllByPage() {
+        // given
+        List<Product> products = List.of(
+                new Product(1l,
+                        "Lavazza cafea boabe",
+                        "Lavazza-cafea-boabe",
+                        "O cafea boabe foarte buna",
+                        "Lavazza",
+                        15,
+                        10,
+                        false,
+                        null,
+                        null),
+                new Product(2l,
+                        "Lavazza cafea boabe",
+                        "Lavazza-cafea-boabe",
+                        "O cafea boabe foarte buna",
+                        "Lavazza",
+                        15,
+                        10,
+                        false,
+                        null,
+                        null)
+        );
+        Page foundPage = new PageImpl<>(products);
+
+        when(productRepository.findAll(any(Pageable.class))).thenReturn(foundPage);
+
+        // when
+        List<Product> actual = productService.findAllByPage(1, 5, "id", "asc");
+
+        // then
+        assertThat(actual).isEqualTo(products);
     }
 
 }
