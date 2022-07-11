@@ -112,7 +112,9 @@ class OrderServiceTests {
                 LocalDate.of(2022, 1, 1),
                 300,
                 null,
-                null,
+                Set.of(
+                        new OrderDetail(1L,(short) 2, 5.5F, 11F, null, null)
+                ),
                 PENDING
         );
         given(orderRepository.save(order1)).willReturn(order1);
@@ -121,7 +123,7 @@ class OrderServiceTests {
         Order actualOrder = orderService.save(order1);
 
         // then
-        verify(orderRepository).save(any());
+        verify(orderRepository, times(2)).save(any());
         AssertionsForClassTypes.assertThat(actualOrder).isEqualTo(order1);
     }
 

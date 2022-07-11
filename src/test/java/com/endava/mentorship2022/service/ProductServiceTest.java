@@ -2,6 +2,7 @@ package com.endava.mentorship2022.service;
 
 import com.endava.mentorship2022.exception.ProductNotFound;
 import com.endava.mentorship2022.model.Product;
+import com.endava.mentorship2022.model.TechnicalDetail;
 import com.endava.mentorship2022.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -171,7 +173,9 @@ class ProductServiceTest {
                 10,
                 false,
                 null,
-                null
+                Set.of(
+                        new TechnicalDetail(1L, "Brand", "Lavazza", null)
+                )
         );
 
         when(productRepository.save(product)).thenReturn(product);
